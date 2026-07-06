@@ -1,0 +1,300 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 1810" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowData" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#0D9488"/>
+    </marker>
+  </defs>
+
+  <style>
+    text { fill:#0F172A; }
+    .title    { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12.5px; fill:#64748B; }
+    .nt  { font-size:13px;  font-weight:700; }
+    .ns  { font-size:10.5px; fill:#475569; }
+    .chip{ font-size:9.5px; font-weight:600; fill:#4F46E5; }
+    .el  { font-size:10px;  fill:#475569; font-weight:600; }
+    .pill{ font-size:12.5px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#6366F1; letter-spacing:0.3px; }
+    .lg  { font-size:11px; fill:#334155; }
+    .flow  { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .data  { stroke:#94A3B8; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+    .mem   { stroke:#0D9488; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+
+  <rect x="0" y="0" width="1180" height="1810" fill="#FFFFFF"/>
+
+  <!-- ===== header ===== -->
+  <text class="title" x="40" y="42">Intelligent DevOps Incident Response — Workflow</text>
+  <text class="subtitle" x="41" y="64">CrewAI Flow · @start → @listen → @router → or_() join · 3 agents in true parallel · SQLite memory · HITL</text>
+
+  <!-- ===== stores (right column) ===== -->
+  <!-- Mock DevOps APIs cylinder -->
+  <g>
+    <rect x="920" y="352" width="190" height="64" fill="#F0FDFA" stroke="none"/>
+    <line x1="920" y1="352" x2="920" y2="416" stroke="#0D9488" stroke-width="1.3"/>
+    <line x1="1110" y1="352" x2="1110" y2="416" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="1015" cy="416" rx="95" ry="13" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="1015" cy="352" rx="95" ry="13" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.3"/>
+    <text class="nt" x="1015" y="384" text-anchor="middle" fill="#0F766E" font-size="12">Mock DevOps APIs</text>
+    <text class="ns" x="1015" y="400" text-anchor="middle" fill="#0F766E">:8000 · ES·Prom·K8s·Jira·PD</text>
+  </g>
+  <!-- SQLite memory cylinder -->
+  <g>
+    <rect x="920" y="470" width="190" height="52" fill="#F0FDFA" stroke="none"/>
+    <line x1="920" y1="470" x2="920" y2="522" stroke="#0D9488" stroke-width="1.3"/>
+    <line x1="1110" y1="470" x2="1110" y2="522" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="1015" cy="522" rx="95" ry="13" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="1015" cy="470" rx="95" ry="13" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.3"/>
+    <text class="nt" x="1015" y="498" text-anchor="middle" fill="#0F766E" font-size="12">SQLite Memory</text>
+    <text class="ns" x="1015" y="513" text-anchor="middle" fill="#0F766E">data/incidents.db</text>
+  </g>
+
+  <!-- ===== main spine ===== -->
+  <!-- Engineer / UI -->
+  <rect x="280" y="86" width="240" height="42" rx="21" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.4"/>
+  <text class="nt" x="400" y="112" text-anchor="middle" fill="#1E1B4B">Engineer · Streamlit UI</text>
+
+  <!-- 1-2 Initiate -->
+  <rect x="238" y="150" width="324" height="70" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.6"/>
+  <text class="nt" x="400" y="172" text-anchor="middle">1–2 · Initiate &amp; Parse Alert</text>
+  <text class="ns" x="400" y="189" text-anchor="middle">create_incident_state() · parse service · type · severity</text>
+  <text class="ns" x="400" y="204" text-anchor="middle" fill="#B91C1C">'critical' / 'outage'  ⇒  P0</text>
+
+  <!-- 3 Parallel fork -->
+  <path d="M215 246 H585 L565 290 H235 Z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="400" y="266" text-anchor="middle" fill="#1E1B4B" font-size="12">3 · Parallel Analysis</text>
+  <text class="ns" x="400" y="281" text-anchor="middle" fill="#3730A3">asyncio.gather · retries ≤ max_retries (backoff)</text>
+
+  <!-- subgraph frame -->
+  <rect x="40" y="318" width="700" height="196" rx="12" fill="#F8FAFC" stroke="#C7D2FE" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="56" y="338">three single-agent Crews run simultaneously</text>
+
+  <!-- agent cards -->
+  <g>
+    <rect x="55" y="352" width="205" height="138" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="157" y="382" text-anchor="middle" fill="#1E1B4B">Detective Agent</text>
+    <text class="ns" x="157" y="400" text-anchor="middle">root-cause investigation</text>
+    <line x1="75" y1="416" x2="240" y2="416" stroke="#C7D2FE"/>
+    <text class="chip" x="157" y="434" text-anchor="middle">tools:</text>
+    <text class="chip" x="157" y="449" text-anchor="middle">search_logs_tool</text>
+    <text class="chip" x="157" y="463" text-anchor="middle">get_metrics_tool</text>
+    <text class="ns" x="157" y="481" text-anchor="middle" fill="#4F46E5">→ confidence</text>
+  </g>
+  <g>
+    <rect x="285" y="352" width="205" height="138" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="387" y="382" text-anchor="middle" fill="#1E1B4B">Diagnostics Agent</text>
+    <text class="ns" x="387" y="400" text-anchor="middle">infrastructure health</text>
+    <line x1="305" y1="416" x2="470" y2="416" stroke="#C7D2FE"/>
+    <text class="chip" x="387" y="434" text-anchor="middle">tools:</text>
+    <text class="chip" x="387" y="449" text-anchor="middle">get_pods_tool</text>
+    <text class="chip" x="387" y="463" text-anchor="middle">get_alerts_tool</text>
+    <text class="ns" x="387" y="481" text-anchor="middle" fill="#4F46E5">→ health_score</text>
+  </g>
+  <g>
+    <rect x="515" y="352" width="205" height="138" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="617" y="382" text-anchor="middle" fill="#1E1B4B">Historical Agent</text>
+    <text class="ns" x="617" y="400" text-anchor="middle">pattern matching + memory</text>
+    <line x1="535" y1="416" x2="700" y2="416" stroke="#C7D2FE"/>
+    <text class="chip" x="617" y="434" text-anchor="middle">tools:</text>
+    <text class="chip" x="617" y="449" text-anchor="middle">find_similar_incidents_tool</text>
+    <text class="chip" x="617" y="463" text-anchor="middle">get_pagerduty_history_tool</text>
+    <text class="ns" x="617" y="481" text-anchor="middle" fill="#4F46E5">→ pattern_confidence</text>
+  </g>
+
+  <!-- store feeds -->
+  <path class="data" d="M918 388 H742"/>
+  <rect x="770" y="372" width="86" height="15" fill="#FFFFFF"/>
+  <text class="el" x="813" y="384" text-anchor="middle">REST · JSON</text>
+  <path class="mem" d="M918 492 C 820 500, 760 486, 724 476"/>
+  <rect x="748" y="500" width="150" height="15" fill="#FFFFFF"/>
+  <text class="el" x="823" y="512" text-anchor="middle" fill="#0F766E">past resolved (memory read)</text>
+
+  <!-- Join -->
+  <rect x="210" y="536" width="380" height="60" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.6"/>
+  <text class="nt" x="400" y="560" text-anchor="middle" font-size="12">Join · shared incident state</text>
+  <text class="ns" x="400" y="578" text-anchor="middle">overall_confidence = mean(confidence, health_score, pattern_confidence)</text>
+
+  <!-- Remediation -->
+  <rect x="250" y="628" width="300" height="64" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="400" y="652" text-anchor="middle" fill="#1E1B4B">4 · Remediation Agent</text>
+  <text class="ns" x="400" y="670" text-anchor="middle">reads all analyses → reversible plan + rollback per step</text>
+
+  <!-- Communication -->
+  <rect x="250" y="726" width="300" height="56" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="400" y="748" text-anchor="middle" fill="#1E1B4B">5 · Communication Agent</text>
+  <text class="ns" x="400" y="766" text-anchor="middle">stakeholder status update</text>
+
+  <!-- Decision gate -->
+  <rect x="205" y="808" width="390" height="74" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.2"/>
+  <text class="nt" x="400" y="831" text-anchor="middle">◆ 6 · Decision Gate  (@router)</text>
+  <text class="ns" x="400" y="849" text-anchor="middle">overall ≥ 0.6  ∧  remediation ≥ 0.7  ∧  severity ≠ P0</text>
+  <text class="ns" x="400" y="865" text-anchor="middle" fill="#B91C1C">P0 is never auto-remediated</text>
+
+  <!-- 7a Execute -->
+  <rect x="135" y="918" width="230" height="60" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.6"/>
+  <text class="nt" x="250" y="941" text-anchor="middle" font-size="12">7a · Execute Remediation</text>
+  <text class="ns" x="250" y="959" text-anchor="middle">simulated fix per incident type</text>
+
+  <!-- execution successful? -->
+  <path d="M250 1004 L338 1030 L250 1056 L162 1030 Z" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.6"/>
+  <text class="ns" x="250" y="1034" text-anchor="middle" font-weight="700">execution ok?</text>
+
+  <!-- 7c Post-mortem -->
+  <rect x="105" y="1088" width="290" height="62" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="250" y="1111" text-anchor="middle" fill="#1E1B4B" font-size="12">7c · Post-Mortem Agent</text>
+  <text class="ns" x="250" y="1129" text-anchor="middle">only when resolved → blameless report</text>
+
+  <!-- 7b Mark escalated -->
+  <rect x="445" y="1088" width="230" height="62" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.6"/>
+  <text class="nt" x="560" y="1111" text-anchor="middle" fill="#991B1B" font-size="12">7b · Mark Escalated</text>
+  <text class="ns" x="560" y="1129" text-anchor="middle" fill="#991B1B">reason recorded · post-mortem skipped</text>
+
+  <!-- Finalize -->
+  <rect x="260" y="1188" width="280" height="62" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.8"/>
+  <text class="nt" x="400" y="1214" text-anchor="middle">8 · Finalize</text>
+  <text class="ns" x="400" y="1232" text-anchor="middle">save_incident() → SQLite</text>
+
+  <!-- outcomes -->
+  <rect x="228" y="1292" width="150" height="44" rx="22" fill="#ECFDF5" stroke="#059669" stroke-width="1.8"/>
+  <text class="pill" x="303" y="1319" text-anchor="middle" fill="#065F46">RESOLVED</text>
+  <rect x="462" y="1292" width="156" height="44" rx="22" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.8"/>
+  <text class="pill" x="540" y="1319" text-anchor="middle" fill="#991B1B">ESCALATED</text>
+
+  <!-- ===== flow connectors ===== -->
+  <path class="flow" d="M400 128 V150" marker-end="url(#arrow)"/>
+  <text class="el" x="410" y="143" text-anchor="start">alert_text · kickoff(inputs)</text>
+
+  <path class="flow" d="M400 220 V246" marker-end="url(#arrow)"/>
+
+  <!-- fork to 3 cards -->
+  <path class="flow" d="M400 290 V308 H157 V352" marker-end="url(#arrow)"/>
+  <path class="flow" d="M400 290 V352" marker-end="url(#arrow)"/>
+  <path class="flow" d="M400 290 V308 H617 V352" marker-end="url(#arrow)"/>
+
+  <!-- cards to join -->
+  <path class="flow" d="M157 490 V514 H400 V536" marker-end="url(#arrow)"/>
+  <path class="flow" d="M400 490 V536" marker-end="url(#arrow)"/>
+  <path class="flow" d="M617 490 V514 H400" />
+  <rect x="120" y="508" width="72" height="15" fill="#FFFFFF"/>
+  <text class="el" x="156" y="520" text-anchor="middle">confidence</text>
+  <rect x="352" y="497" width="96" height="15" fill="#FFFFFF"/>
+  <text class="el" x="400" y="509" text-anchor="middle">health_score</text>
+  <rect x="560" y="508" width="118" height="15" fill="#FFFFFF"/>
+  <text class="el" x="619" y="520" text-anchor="middle">pattern_confidence</text>
+
+  <path class="flow" d="M400 596 V628" marker-end="url(#arrow)"/>
+  <rect x="404" y="605" width="176" height="15" fill="#FFFFFF"/>
+  <text class="el" x="408" y="617" text-anchor="start">full agent_analyses (handoff)</text>
+
+  <path class="flow" d="M400 692 V726" marker-end="url(#arrow)"/>
+  <rect x="404" y="702" width="196" height="15" fill="#FFFFFF"/>
+  <text class="el" x="408" y="714" text-anchor="start">+ action plan + remediation_confidence</text>
+
+  <path class="flow" d="M400 782 V808" marker-end="url(#arrow)"/>
+
+  <!-- gate branches -->
+  <path class="flow" d="M400 882 V898 H250 V918" marker-end="url(#arrow)"/>
+  <rect x="250" y="890" width="120" height="15" fill="#FFFFFF"/>
+  <text class="el" x="310" y="902" text-anchor="middle" fill="#047857">route: auto_remediate</text>
+  <path class="flow" d="M400 882 V898 H560 V1088" marker-end="url(#arrow)"/>
+  <rect x="512" y="960" width="96" height="15" fill="#FFFFFF"/>
+  <text class="el" x="560" y="972" text-anchor="middle" fill="#B91C1C">route: escalate</text>
+
+  <path class="flow" d="M250 978 V1004" marker-end="url(#arrow)"/>
+  <path class="flow" d="M250 1056 V1088" marker-end="url(#arrow)"/>
+  <rect x="258" y="1064" width="30" height="15" fill="#FFFFFF"/>
+  <text class="el" x="272" y="1076" text-anchor="middle" fill="#047857">yes</text>
+
+  <!-- execution failed -> escalate -->
+  <path class="flow" d="M338 1030 H500 V1088" marker-end="url(#arrow)"/>
+  <rect x="352" y="1012" width="96" height="15" fill="#FFFFFF"/>
+  <text class="el" x="400" y="1024" text-anchor="middle" fill="#B91C1C">no ⇒ rollback</text>
+
+  <!-- to finalize -->
+  <path class="flow" d="M250 1150 V1169 H400 V1188" marker-end="url(#arrow)"/>
+  <path class="flow" d="M560 1150 V1169 H400" />
+
+  <!-- finalize to outcomes -->
+  <path class="flow" d="M400 1250 V1272 H303 V1292" marker-end="url(#arrow)"/>
+  <rect x="306" y="1258" width="66" height="15" fill="#FFFFFF"/>
+  <text class="el" x="339" y="1270" text-anchor="middle" fill="#047857">resolved</text>
+  <path class="flow" d="M400 1250 V1272 H540 V1292" marker-end="url(#arrow)"/>
+  <rect x="440" y="1258" width="66" height="15" fill="#FFFFFF"/>
+  <text class="el" x="473" y="1270" text-anchor="middle" fill="#B91C1C">escalated</text>
+
+  <!-- memory write loop -->
+  <path class="mem" d="M540 1219 H1150 V495 H1112" marker-end="url(#arrowMem)"/>
+  <text class="el" x="1145" y="1150" text-anchor="end" fill="#0F766E" transform="rotate(-90 1145 1150)">write final record → feeds Historical next run</text>
+
+  <!-- ===== HITL subgraph ===== -->
+  <rect x="250" y="1372" width="710" height="336" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="grp" x="268" y="1396" fill="#B45309">HUMAN-IN-THE-LOOP · Streamlit  (human_intervention/approval_manager.py)</text>
+
+  <path class="flow" d="M540 1336 V1372" marker-end="url(#arrow)"/>
+
+  <!-- engineer decision -->
+  <rect x="292" y="1420" width="150" height="52" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+  <text class="nt" x="367" y="1443" text-anchor="middle" font-size="12">Engineer</text>
+  <text class="ns" x="367" y="1460" text-anchor="middle">approve / reject?</text>
+
+  <!-- execute under human authority -->
+  <rect x="540" y="1420" width="210" height="52" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="645" y="1443" text-anchor="middle" fill="#1E1B4B" font-size="12">Execute under human authority</text>
+  <text class="ns" x="645" y="1460" text-anchor="middle">RemediationAgent.execute_remediation</text>
+
+  <!-- successful? -->
+  <path d="M645 1502 L735 1530 L645 1558 L555 1530 Z" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.6"/>
+  <text class="ns" x="645" y="1534" text-anchor="middle" font-weight="700">successful?</text>
+
+  <!-- resolved terminal -->
+  <rect x="560" y="1600" width="170" height="42" rx="21" fill="#ECFDF5" stroke="#059669" stroke-width="1.6"/>
+  <text class="pill" x="645" y="1626" text-anchor="middle" fill="#065F46" font-size="11.5">RESOLVED (re-saved)</text>
+
+  <!-- stays escalated terminal -->
+  <rect x="300" y="1600" width="170" height="42" rx="21" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.6"/>
+  <text class="pill" x="385" y="1626" text-anchor="middle" fill="#991B1B" font-size="11.5">stays ESCALATED</text>
+
+  <text class="ns" x="645" y="1672" text-anchor="middle" fill="#B45309">hitl_decision + outcome persisted via save_incident()</text>
+
+  <!-- hitl connectors -->
+  <path class="flow" d="M442 1446 H540" marker-end="url(#arrow)"/>
+  <rect x="462" y="1430" width="58" height="15" fill="#FFFBEB"/>
+  <text class="el" x="491" y="1442" text-anchor="middle" fill="#047857">approve</text>
+  <path class="flow" d="M645 1472 V1502" marker-end="url(#arrow)"/>
+  <path class="flow" d="M645 1558 V1600" marker-end="url(#arrow)"/>
+  <rect x="620" y="1572" width="30" height="15" fill="#FFFBEB"/>
+  <text class="el" x="635" y="1584" text-anchor="middle" fill="#047857">yes</text>
+  <path class="flow" d="M555 1530 H500 V1600" marker-end="url(#arrow)"/>
+  <rect x="452" y="1548" width="96" height="15" fill="#FFFBEB"/>
+  <text class="el" x="500" y="1560" text-anchor="middle" fill="#B91C1C">no ⇒ rollback</text>
+  <path class="flow" d="M367 1472 V1580 H385 V1600" marker-end="url(#arrow)"/>
+  <rect x="330" y="1520" width="52" height="15" fill="#FFFBEB"/>
+  <text class="el" x="356" y="1532" text-anchor="middle" fill="#B91C1C">reject</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(40,1740)">
+    <text class="grp" x="0" y="0" fill="#334155">Legend</text>
+    <line class="flow" x1="0" y1="18" x2="40" y2="18" marker-end="url(#arrow)"/>
+    <text class="lg" x="48" y="22">control flow</text>
+    <line class="data" x1="170" y1="18" x2="210" y2="18" marker-end="url(#arrowData)"/>
+    <text class="lg" x="218" y="22">tool / REST data</text>
+    <line class="mem" x1="360" y1="18" x2="400" y2="18" marker-end="url(#arrowMem)"/>
+    <text class="lg" x="408" y="22">memory I/O (SQLite)</text>
+    <rect x="560" y="9" width="16" height="16" rx="3" fill="#EEF2FF" stroke="#4F46E5"/>
+    <text class="lg" x="582" y="22">agent</text>
+    <rect x="640" y="9" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#C7D2FE"/>
+    <text class="lg" x="662" y="22">step</text>
+    <rect x="712" y="9" width="16" height="16" rx="3" fill="#ECFDF5" stroke="#059669"/>
+    <text class="lg" x="734" y="22">resolved</text>
+    <rect x="806" y="9" width="16" height="16" rx="3" fill="#FEF2F2" stroke="#DC2626"/>
+    <text class="lg" x="828" y="22">escalated</text>
+    <rect x="900" y="9" width="16" height="16" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+    <text class="lg" x="922" y="22">HITL</text>
+  </g>
+</svg>
