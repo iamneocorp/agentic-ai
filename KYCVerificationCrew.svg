@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1580" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowAudit" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#475569"/></marker>
+    <marker id="arrowHitl" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#B45309"/></marker>
+  </defs>
+  <style>
+    text { fill:#12241F; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12.5px; fill:#4B5563; }
+    .nt { font-size:13px; font-weight:700; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .chip { font-size:9.5px; font-weight:600; fill:#0F6E56; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .pill { font-size:12px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#0F6E56; }
+    .lg { font-size:11px; fill:#334155; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .audit { stroke:#475569; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+    .hfeed { stroke:#B45309; stroke-width:1.5; fill:none; stroke-dasharray:6 4; }
+  </style>
+
+  <rect x="0" y="0" width="1200" height="1580" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="42">AI-Powered KYC Verification — CrewAI Flow</text>
+  <text class="subtitle" x="41" y="64">@start → @listen → @router · 5 pure-LLM agents · 3 run in parallel · risk gate · HITL review · SQLite audit trail</text>
+
+  <!-- audit store (right) -->
+  <g>
+    <rect x="915" y="892" width="180" height="60" fill="#F1F5F9" stroke="none"/>
+    <line x1="915" y1="892" x2="915" y2="952" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1095" y1="892" x2="1095" y2="952" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1005" cy="952" rx="90" ry="12" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1005" cy="892" rx="90" ry="12" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1005" y="920" text-anchor="middle" fill="#334155" font-size="12">SQLite audit trail</text>
+    <text class="ns" x="1005" y="936" text-anchor="middle" fill="#334155">data/kyc_audit.db</text>
+  </g>
+
+  <!-- UI -->
+  <rect x="305" y="84" width="230" height="40" rx="20" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/>
+  <text class="nt" x="420" y="109" text-anchor="middle" fill="#12241F">Reviewer · Streamlit UI</text>
+
+  <!-- 1 initiate -->
+  <rect x="250" y="140" width="340" height="72" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="420" y="164" text-anchor="middle">1 · initiate_document_processing</text>
+  <text class="ns" x="420" y="181" text-anchor="middle">extract_pdf_content() → create_verification_state()</text>
+  <text class="ns" x="420" y="197" text-anchor="middle" fill="#0F6E56">input: customer PDF · 4 candidates</text>
+
+  <!-- parallel band -->
+  <rect x="45" y="250" width="740" height="192" rx="12" fill="#F6FBF9" stroke="#A7D3C6" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="60" y="270">2 · parallel_analysis · asyncio.gather — three agents run simultaneously</text>
+
+  <g>
+    <rect x="60" y="286" width="222" height="138" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+    <text class="nt" x="171" y="312" text-anchor="middle" fill="#12241F">document_processor</text>
+    <text class="ns" x="171" y="329" text-anchor="middle">extract file facts</text>
+    <line x1="80" y1="344" x2="262" y2="344" stroke="#A7D3C6"/>
+    <text class="chip" x="171" y="360" text-anchor="middle">tools:</text>
+    <text class="chip" x="171" y="374" text-anchor="middle">metadata_extractor_tool</text>
+    <text class="chip" x="171" y="388" text-anchor="middle">pdf_processor_tool</text>
+    <text class="ns" x="171" y="407" text-anchor="middle" fill="#0F6E56">→ file_metadata</text>
+  </g>
+  <g>
+    <rect x="304" y="286" width="222" height="138" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+    <text class="nt" x="415" y="312" text-anchor="middle" fill="#12241F">identity_extraction</text>
+    <text class="ns" x="415" y="329" text-anchor="middle">extract KYC fields (LLM)</text>
+    <line x1="324" y1="344" x2="506" y2="344" stroke="#A7D3C6"/>
+    <text class="chip" x="415" y="364" text-anchor="middle">(no tools)</text>
+    <text class="ns" x="415" y="386" text-anchor="middle" fill="#0F6E56">→ kyc_data · missing_fields</text>
+  </g>
+  <g>
+    <rect x="548" y="286" width="222" height="138" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+    <text class="nt" x="659" y="312" text-anchor="middle" fill="#12241F">compliance</text>
+    <text class="ns" x="659" y="329" text-anchor="middle">AML/KYC screening (LLM)</text>
+    <line x1="568" y1="344" x2="750" y2="344" stroke="#A7D3C6"/>
+    <text class="chip" x="659" y="364" text-anchor="middle">tool:</text>
+    <text class="chip" x="659" y="378" text-anchor="middle">id_validation_tool</text>
+    <text class="ns" x="659" y="400" text-anchor="middle" fill="#0F6E56">→ compliance_flags</text>
+  </g>
+
+  <!-- 3 assess_risk -->
+  <rect x="260" y="470" width="320" height="56" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+  <text class="nt" x="420" y="493" text-anchor="middle" fill="#12241F">3 · assess_risk_level</text>
+  <text class="ns" x="420" y="510" text-anchor="middle">Risk Assessment agent (LLM) → risk_level + risk_rationale</text>
+
+  <!-- 4 plan_communication -->
+  <rect x="260" y="558" width="320" height="52" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+  <text class="nt" x="420" y="580" text-anchor="middle" fill="#12241F">4 · plan_communication</text>
+  <text class="ns" x="420" y="596" text-anchor="middle">Communication agent → onboarding case notice</text>
+
+  <!-- 5 gate -->
+  <rect x="222" y="642" width="396" height="76" rx="10" fill="#FFFFFF" stroke="#0F6E56" stroke-width="2.2"/>
+  <text class="nt" x="420" y="665" text-anchor="middle">◆ 5 · route_by_risk_level  (@router)</text>
+  <text class="ns" x="420" y="683" text-anchor="middle">HIGH or confidence &lt; min_confidence_for_auto → manual_review</text>
+  <text class="ns" x="420" y="699" text-anchor="middle">MEDIUM → additional_verification · else → auto_approve</text>
+
+  <!-- 6a auto approve -->
+  <rect x="60" y="794" width="230" height="60" rx="10" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.6"/>
+  <text class="nt" x="175" y="816" text-anchor="middle" fill="#166534" font-size="10.5">approve_onboarding_auto</text>
+  <text class="ns" x="175" y="834" text-anchor="middle" fill="#166534">6a · APPROVED · auto_approval</text>
+
+  <!-- 6b additional -->
+  <rect x="305" y="794" width="230" height="60" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+  <text class="nt" x="420" y="816" text-anchor="middle" fill="#92400E" font-size="10.5">request_additional_verification</text>
+  <text class="ns" x="420" y="834" text-anchor="middle" fill="#92400E">6b · ADDITIONAL_VERIFICATION</text>
+
+  <!-- 6c manual review -->
+  <rect x="550" y="794" width="230" height="60" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.6"/>
+  <text class="nt" x="665" y="816" text-anchor="middle" fill="#991B1B" font-size="10.5">escalate_manual_review</text>
+  <text class="ns" x="665" y="834" text-anchor="middle" fill="#991B1B">6c · MANUAL_REVIEW_REQUIRED</text>
+
+  <!-- 6d finalize -->
+  <rect x="260" y="900" width="320" height="58" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.8"/>
+  <text class="nt" x="420" y="924" text-anchor="middle" font-size="12">6d · finalize_verification  (or_ join)</text>
+  <text class="ns" x="420" y="941" text-anchor="middle">record_verification (audit) + save_result</text>
+
+  <!-- HITL band -->
+  <rect x="250" y="1004" width="700" height="196" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="grp" x="266" y="1026" fill="#B45309">HUMAN-IN-THE-LOOP · Streamlit (human_intervention/) — on MANUAL_REVIEW_REQUIRED</text>
+  <rect x="360" y="1044" width="220" height="50" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+  <text class="nt" x="470" y="1065" text-anchor="middle" font-size="12">Compliance officer</text>
+  <text class="ns" x="470" y="1082" text-anchor="middle">approve_onboarding · reject_onboarding</text>
+  <rect x="300" y="1140" width="190" height="42" rx="21" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.6"/>
+  <text class="pill" x="395" y="1166" text-anchor="middle" fill="#166534" font-size="11.5">APPROVED</text>
+  <rect x="560" y="1140" width="190" height="42" rx="21" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.6"/>
+  <text class="pill" x="655" y="1166" text-anchor="middle" fill="#991B1B" font-size="11.5">REJECTED</text>
+
+  <!-- ===== connectors ===== -->
+  <path class="flow" d="M420 124 V140" marker-end="url(#arrow)"/>
+  <rect x="430" y="124" width="196" height="14" fill="#FFFFFF"/>
+  <text class="el" x="434" y="135" text-anchor="start">run_kyc_verification(document_path)</text>
+  <!-- initiate to 3 cards -->
+  <path class="flow" d="M420 212 V240 H171 V286" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 212 V286" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 212 V240 H659 V286" marker-end="url(#arrow)"/>
+  <!-- 3 cards to assess_risk (fan-in) -->
+  <path class="flow" d="M171 424 V448 H420 V470" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 424 V470" marker-end="url(#arrow)"/>
+  <path class="flow" d="M659 424 V448 H420" />
+  <rect x="330" y="442" width="180" height="15" fill="#FFFFFF"/>
+  <text class="el" x="420" y="454" text-anchor="middle">join → data_quality_confidence (mean)</text>
+
+  <path class="flow" d="M420 526 V558" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 610 V642" marker-end="url(#arrow)"/>
+
+  <!-- gate to 3 branches -->
+  <path class="flow" d="M420 718 V748 H175 V794" marker-end="url(#arrow)"/>
+  <rect x="120" y="758" width="110" height="15" fill="#FFFFFF"/>
+  <text class="el" x="175" y="770" text-anchor="middle" fill="#047857">auto_approve</text>
+  <path class="flow" d="M420 718 V794" marker-end="url(#arrow)"/>
+  <rect x="360" y="762" width="120" height="15" fill="#FFFFFF"/>
+  <text class="el" x="420" y="774" text-anchor="middle" fill="#B45309">additional_verification</text>
+  <path class="flow" d="M420 718 V748 H665 V794" marker-end="url(#arrow)"/>
+  <rect x="612" y="758" width="106" height="15" fill="#FFFFFF"/>
+  <text class="el" x="665" y="770" text-anchor="middle" fill="#B91C1C">manual_review</text>
+
+  <!-- 3 branches to finalize (or_ join) -->
+  <path class="flow" d="M175 854 V878 H420 V900" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 854 V900" marker-end="url(#arrow)"/>
+  <path class="flow" d="M665 854 V878 H420" />
+
+  <!-- finalize to audit db -->
+  <path class="audit" d="M580 921 H915" marker-end="url(#arrowAudit)"/>
+  <rect x="640" y="905" width="150" height="15" fill="#FFFFFF"/>
+  <text class="el" x="715" y="917" text-anchor="middle" fill="#475569">record_verification (write)</text>
+
+  <!-- finalize to HITL (manual case) -->
+  <path class="hfeed" d="M420 958 V1004" marker-end="url(#arrowHitl)"/>
+  <rect x="424" y="972" width="196" height="15" fill="#FFFFFF"/>
+  <text class="el" x="428" y="984" text-anchor="start" fill="#B45309">if MANUAL_REVIEW_REQUIRED</text>
+
+  <!-- HITL officer to approve/reject -->
+  <path class="flow" d="M420 1094 V1118 H395 V1140" marker-end="url(#arrow)"/>
+  <rect x="330" y="1104" width="66" height="15" fill="#FFFBEB"/>
+  <text class="el" x="363" y="1116" text-anchor="middle" fill="#047857">approve</text>
+  <path class="flow" d="M520 1094 V1118 H655 V1140" marker-end="url(#arrow)"/>
+  <rect x="628" y="1104" width="58" height="15" fill="#FFFBEB"/>
+  <text class="el" x="655" y="1116" text-anchor="middle" fill="#B91C1C">reject</text>
+
+  <!-- HITL re-record audit -->
+  <path class="audit" d="M750 1161 H1005 V964" marker-end="url(#arrowAudit)"/>
+  <text class="el" x="1000" y="1120" text-anchor="end" fill="#475569" transform="rotate(-90 1000 1120)">approve/reject upsert the audit row</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(40,1300)">
+    <text class="grp" x="0" y="0" fill="#334155">Legend</text>
+    <rect x="0" y="9" width="16" height="16" rx="3" fill="#E1F5EE" stroke="#0F6E56"/>
+    <text class="lg" x="22" y="22">LLM agent</text>
+    <rect x="120" y="9" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text class="lg" x="142" y="22">deterministic step</text>
+    <rect x="290" y="9" width="16" height="16" rx="3" fill="#ECFDF5" stroke="#16A34A"/>
+    <text class="lg" x="312" y="22">approved</text>
+    <rect x="400" y="9" width="16" height="16" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+    <text class="lg" x="422" y="22">additional / HITL</text>
+    <rect x="545" y="9" width="16" height="16" rx="3" fill="#FEF2F2" stroke="#DC2626"/>
+    <text class="lg" x="567" y="22">manual review / reject</text>
+    <line class="audit" x1="730" y1="18" x2="770" y2="18" marker-end="url(#arrowAudit)"/>
+    <text class="lg" x="778" y="22">SQLite audit I/O</text>
+  </g>
+</svg>
