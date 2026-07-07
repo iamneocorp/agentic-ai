@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 1400" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#0D9488"/></marker>
+    <marker id="arrowLoop" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#6366F1"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12.5px; fill:#64748B; }
+    .nt { font-size:13px; font-weight:700; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .chip { font-size:9.5px; font-weight:600; fill:#4F46E5; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#6366F1; }
+    .lg { font-size:11px; fill:#334155; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .mem { stroke:#0D9488; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+    .loop { stroke:#6366F1; stroke-width:1.7; fill:none; stroke-dasharray:6 4; }
+  </style>
+
+  <rect x="0" y="0" width="1180" height="1400" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="42">AI-Powered Incident Response — LangGraph Workflow</text>
+  <text class="subtitle" x="41" y="64">StateGraph · parallel fan-out/fan-in · conditional routing · retry loop · interrupt() HITL · SQLite memory</text>
+
+  <!-- SQLite memory store (right) -->
+  <g>
+    <rect x="905" y="300" width="180" height="60" fill="#F0FDFA" stroke="none"/>
+    <line x1="905" y1="300" x2="905" y2="360" stroke="#0D9488" stroke-width="1.3"/>
+    <line x1="1085" y1="300" x2="1085" y2="360" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="995" cy="360" rx="90" ry="12" fill="#F0FDFA" stroke="#0D9488" stroke-width="1.3"/>
+    <ellipse cx="995" cy="300" rx="90" ry="12" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.3"/>
+    <text class="nt" x="995" y="328" text-anchor="middle" fill="#0F766E" font-size="12">SQLite memory</text>
+    <text class="ns" x="995" y="344" text-anchor="middle" fill="#0F766E">data/incidents.db</text>
+  </g>
+
+  <!-- START -->
+  <rect x="365" y="86" width="110" height="36" rx="18" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.4"/>
+  <text class="nt" x="420" y="109" text-anchor="middle" fill="#1E1B4B">START</text>
+
+  <!-- incident_trigger -->
+  <rect x="295" y="140" width="250" height="58" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="420" y="165" text-anchor="middle" fill="#1E1B4B">incident_trigger</text>
+  <text class="ns" x="420" y="182" text-anchor="middle">LLM · alert → service · severity · description</text>
+
+  <!-- parallel subgraph -->
+  <rect x="45" y="232" width="740" height="184" rx="12" fill="#F8FAFC" stroke="#C7D2FE" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="60" y="252">parallel fan-out · add_edge(incident_trigger → 3) · run simultaneously</text>
+
+  <g>
+    <rect x="60" y="266" width="222" height="132" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="171" y="294" text-anchor="middle" fill="#1E1B4B">log_analysis</text>
+    <text class="ns" x="171" y="311" text-anchor="middle">LLM · detect anomalies</text>
+    <line x1="80" y1="326" x2="262" y2="326" stroke="#C7D2FE"/>
+    <text class="chip" x="171" y="346" text-anchor="middle">data provider:</text>
+    <text class="chip" x="171" y="360" text-anchor="middle">fetch_recent_logs()</text>
+    <text class="ns" x="171" y="384" text-anchor="middle" fill="#4F46E5">→ log_analysis_results</text>
+  </g>
+  <g>
+    <rect x="304" y="266" width="222" height="132" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="415" y="294" text-anchor="middle" fill="#1E1B4B">knowledge_lookup</text>
+    <text class="ns" x="415" y="311" text-anchor="middle">LLM · match similar</text>
+    <line x1="324" y1="326" x2="506" y2="326" stroke="#C7D2FE"/>
+    <text class="chip" x="415" y="346" text-anchor="middle">data provider:</text>
+    <text class="chip" x="415" y="360" text-anchor="middle">search_similar_incidents() · SQLite</text>
+    <text class="ns" x="415" y="384" text-anchor="middle" fill="#4F46E5">→ knowledge_lookup_results</text>
+  </g>
+  <g>
+    <rect x="548" y="266" width="222" height="132" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="659" y="294" text-anchor="middle" fill="#1E1B4B">security_diagnosis</text>
+    <text class="ns" x="659" y="311" text-anchor="middle">LLM · scan events</text>
+    <line x1="568" y1="326" x2="750" y2="326" stroke="#C7D2FE"/>
+    <text class="chip" x="659" y="346" text-anchor="middle">data provider:</text>
+    <text class="chip" x="659" y="360" text-anchor="middle">fetch_security_events()</text>
+    <text class="ns" x="659" y="384" text-anchor="middle" fill="#4F46E5">→ security_results</text>
+  </g>
+
+  <!-- root_cause (fan-in) -->
+  <rect x="295" y="452" width="250" height="58" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+  <text class="nt" x="420" y="477" text-anchor="middle" fill="#1E1B4B">root_cause</text>
+  <text class="ns" x="420" y="494" text-anchor="middle">LLM · full context → root cause + confidence</text>
+
+  <!-- coordinator -->
+  <rect x="305" y="548" width="230" height="50" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.6"/>
+  <text class="nt" x="420" y="570" text-anchor="middle" font-size="12">coordinator</text>
+  <text class="ns" x="420" y="586" text-anchor="middle">aggregate summary (no LLM)</text>
+
+  <!-- decision gate -->
+  <rect x="275" y="628" width="290" height="66" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.2"/>
+  <text class="nt" x="420" y="651" text-anchor="middle">◆ decision · add_conditional_edges</text>
+  <text class="ns" x="420" y="671" text-anchor="middle">auto ⇔ anomalies ∧ confidence ≥ 0.8 ∧ history</text>
+
+  <!-- mitigation (convergence, bottom-left) -->
+  <rect x="145" y="1050" width="210" height="56" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.6"/>
+  <text class="nt" x="250" y="1074" text-anchor="middle" font-size="12">mitigation</text>
+  <text class="ns" x="250" y="1091" text-anchor="middle">run playbook → actions_taken</text>
+
+  <!-- escalation -->
+  <rect x="495" y="760" width="210" height="56" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.6"/>
+  <text class="nt" x="600" y="784" text-anchor="middle" fill="#991B1B" font-size="12">escalation</text>
+  <text class="ns" x="600" y="801" text-anchor="middle" fill="#991B1B">ticket TICKET-{id} · interrupt()</text>
+
+  <!-- HITL band -->
+  <rect x="435" y="852" width="440" height="150" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="grp" x="452" y="874" fill="#B45309">HUMAN-IN-THE-LOOP · interrupt() → Command(resume={"action": …})</text>
+  <rect x="560" y="892" width="190" height="50" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+  <text class="nt" x="655" y="913" text-anchor="middle" font-size="12">Engineer decision</text>
+  <text class="ns" x="655" y="930" text-anchor="middle">approve / reject → human_decision</text>
+  <text class="ns" x="655" y="982" text-anchor="middle" fill="#B45309">approve → mitigation · reject → communicator</text>
+
+  <!-- communicator -->
+  <rect x="295" y="1150" width="250" height="56" rx="10" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.8"/>
+  <text class="nt" x="420" y="1174" text-anchor="middle" font-size="12">communicator</text>
+  <text class="ns" x="420" y="1191" text-anchor="middle">final_report + save_incident → SQLite</text>
+
+  <!-- END -->
+  <rect x="365" y="1252" width="110" height="36" rx="18" fill="#ECFDF5" stroke="#059669" stroke-width="1.8"/>
+  <text class="pill" x="420" y="1276" text-anchor="middle" fill="#065F46">END</text>
+  <text class="ns" x="500" y="1274" text-anchor="start" fill="#475569">final_report.status: RESOLVED / ESCALATED</text>
+
+  <!-- ===== connectors ===== -->
+  <path class="flow" d="M420 122 V140" marker-end="url(#arrow)"/>
+  <!-- trigger fan-out -->
+  <path class="flow" d="M420 198 V222 H171 V266" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 198 V266" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 198 V222 H659 V266" marker-end="url(#arrow)"/>
+  <!-- fan-in to root_cause -->
+  <path class="flow" d="M171 398 V430 H420 V452" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 398 V452" marker-end="url(#arrow)"/>
+  <path class="flow" d="M659 398 V430 H420" />
+  <rect x="352" y="424" width="136" height="15" fill="#FFFFFF"/>
+  <text class="el" x="420" y="436" text-anchor="middle">fan-in: add_edge([3] → root_cause)</text>
+
+  <path class="flow" d="M420 510 V548" marker-end="url(#arrow)"/>
+  <path class="flow" d="M420 598 V628" marker-end="url(#arrow)"/>
+
+  <!-- decision → auto_mitigation (down the left spine) -->
+  <path class="flow" d="M275 661 H250 V1050" marker-end="url(#arrow)"/>
+  <rect x="196" y="700" width="112" height="15" fill="#FFFFFF"/>
+  <text class="el" x="252" y="712" text-anchor="middle" fill="#047857">auto_mitigation</text>
+
+  <!-- decision → escalation -->
+  <path class="flow" d="M565 661 H600 V760" marker-end="url(#arrow)"/>
+  <rect x="560" y="708" width="80" height="15" fill="#FFFFFF"/>
+  <text class="el" x="600" y="720" text-anchor="middle" fill="#B91C1C">escalation</text>
+
+  <!-- decision → retry loop (far left, back to parallel band) -->
+  <path class="loop" d="M275 680 H35 V336 H45" marker-end="url(#arrowLoop)"/>
+  <text class="el" x="30" y="508" text-anchor="middle" fill="#4F46E5" transform="rotate(-90 30 508)">retry · retry_count + 1 (while &lt; MAX_RETRIES)</text>
+
+  <!-- escalation → HITL -->
+  <path class="flow" d="M600 816 V852" marker-end="url(#arrow)"/>
+  <rect x="606" y="826" width="76" height="15" fill="#FFFFFF"/>
+  <text class="el" x="644" y="838" text-anchor="middle" fill="#B45309">interrupt()</text>
+
+  <!-- HITL approve → mitigation -->
+  <path class="flow" d="M560 917 H250 V1050" marker-end="url(#arrow)"/>
+  <rect x="300" y="909" width="60" height="15" fill="#FFFBEB"/>
+  <text class="el" x="330" y="921" text-anchor="middle" fill="#047857">approve</text>
+
+  <!-- HITL reject → communicator -->
+  <path class="flow" d="M655 1002 V1128 H545" marker-end="url(#arrow)"/>
+  <rect x="628" y="1050" width="54" height="15" fill="#FFFFFF"/>
+  <text class="el" x="655" y="1062" text-anchor="middle" fill="#B91C1C">reject</text>
+
+  <!-- mitigation → communicator -->
+  <path class="flow" d="M250 1106 V1128 H295" marker-end="url(#arrow)"/>
+
+  <!-- communicator → END -->
+  <path class="flow" d="M420 1206 V1252" marker-end="url(#arrow)"/>
+  <!-- communicator → SQLite write -->
+  <path class="mem" d="M545 1170 H1120 V366 H1087" marker-end="url(#arrowMem)"/>
+  <text class="el" x="1115" y="770" text-anchor="end" fill="#0F766E" transform="rotate(-90 1115 770)">save_incident → memory (grows knowledge base)</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(40,1330)">
+    <text class="grp" x="0" y="0" fill="#334155">Legend</text>
+    <rect x="0" y="9" width="16" height="16" rx="3" fill="#EEF2FF" stroke="#4F46E5"/>
+    <text class="lg" x="22" y="22">LLM agent node</text>
+    <rect x="150" y="9" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#C7D2FE"/>
+    <text class="lg" x="172" y="22">deterministic node</text>
+    <rect x="320" y="9" width="16" height="16" rx="3" fill="#FEF2F2" stroke="#DC2626"/>
+    <text class="lg" x="342" y="22">escalation</text>
+    <rect x="430" y="9" width="16" height="16" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+    <text class="lg" x="452" y="22">HITL (interrupt)</text>
+    <line class="loop" x1="560" y1="18" x2="600" y2="18" marker-end="url(#arrowLoop)"/>
+    <text class="lg" x="608" y="22">retry loop</text>
+    <line class="mem" x1="700" y1="18" x2="740" y2="18" marker-end="url(#arrowMem)"/>
+    <text class="lg" x="748" y="22">SQLite memory I/O</text>
+  </g>
+</svg>
