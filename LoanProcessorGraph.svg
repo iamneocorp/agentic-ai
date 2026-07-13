@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1240" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#6B21A8"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12px; fill:#64748B; }
+    .nt { font-size:13px; font-weight:700; fill:#581C87; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .chip { font-size:9.5px; font-weight:600; fill:#6B21A8; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#6B21A8; }
+    .lg { font-size:11px; fill:#334155; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .mem { stroke:#6B21A8; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+
+  <rect x="0" y="0" width="1280" height="1240" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="42">Loan Application Processor — LangGraph</text>
+  <text class="subtitle" x="41" y="64">StateGraph · validate → Stage 1 (4 parallel) → risk_assessment (Stage 2, consumes all four) → 3-band gate + terms · interrupt() officer HITL · SqliteSaver</text>
+
+  <!-- checkpointer store -->
+  <g>
+    <rect x="1055" y="784" width="170" height="50" fill="#F1F5F9" stroke="none"/>
+    <line x1="1055" y1="784" x2="1055" y2="834" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1225" y1="784" x2="1225" y2="834" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1140" cy="834" rx="85" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1140" cy="784" rx="85" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1140" y="808" text-anchor="middle" fill="#334155" font-size="12">SqliteSaver</text>
+    <text class="ns" x="1140" y="823" text-anchor="middle" fill="#334155">checkpoints.db</text>
+  </g>
+  <!-- loan store -->
+  <g>
+    <rect x="1055" y="1074" width="170" height="50" fill="#F1F5F9" stroke="none"/>
+    <line x1="1055" y1="1074" x2="1055" y2="1124" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1225" y1="1074" x2="1225" y2="1124" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1140" cy="1124" rx="85" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1140" cy="1074" rx="85" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1140" y="1098" text-anchor="middle" fill="#334155" font-size="12">SQLite loan store</text>
+    <text class="ns" x="1140" y="1113" text-anchor="middle" fill="#334155">loans.db</text>
+  </g>
+
+  <!-- START -->
+  <rect x="535" y="72" width="110" height="34" rx="17" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.4"/>
+  <text class="nt" x="590" y="94" text-anchor="middle">START</text>
+
+  <!-- validate -->
+  <rect x="415" y="124" width="350" height="54" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="590" y="146" text-anchor="middle" font-size="12">validate</text>
+  <text class="ns" x="590" y="163" text-anchor="middle">REQUIRED_FIELDS on applicant → DENIED (skip) if incomplete</text>
+
+  <!-- Stage 1 band -->
+  <rect x="42" y="206" width="1096" height="176" rx="12" fill="#FAF5FF" stroke="#E9D5FF" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="58" y="226">Stage 1 · parallel</text>
+  <g>
+    <rect x="57" y="238" width="244" height="130" rx="10" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.5"/>
+    <text class="nt" x="179" y="262" text-anchor="middle" font-size="12">credit_analysis</text>
+    <text class="ns" x="179" y="279" text-anchor="middle">CreditScoreAgent</text>
+    <line x1="77" y1="291" x2="281" y2="291" stroke="#E9D5FF"/>
+    <text class="chip" x="179" y="310" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="179" y="332" text-anchor="middle" fill="#6B21A8">→ credit_results</text>
+    <text class="ns" x="179" y="350" text-anchor="middle" fill="#6B21A8">(credit_score · credit_rating)</text>
+  </g>
+  <g>
+    <rect x="331" y="238" width="244" height="130" rx="10" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.5"/>
+    <text class="nt" x="453" y="262" text-anchor="middle" font-size="12">income_verification</text>
+    <text class="ns" x="453" y="279" text-anchor="middle">IncomeVerificationAgent</text>
+    <line x1="351" y1="291" x2="555" y2="291" stroke="#E9D5FF"/>
+    <text class="chip" x="453" y="310" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="453" y="332" text-anchor="middle" fill="#6B21A8">→ income_results</text>
+    <text class="ns" x="453" y="350" text-anchor="middle" fill="#6B21A8">(income_score)</text>
+  </g>
+  <g>
+    <rect x="605" y="238" width="244" height="130" rx="10" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.5"/>
+    <text class="nt" x="727" y="262" text-anchor="middle" font-size="12">dti_calculation</text>
+    <text class="ns" x="727" y="279" text-anchor="middle">DebtToIncomeAgent</text>
+    <line x1="625" y1="291" x2="829" y2="291" stroke="#E9D5FF"/>
+    <text class="chip" x="727" y="310" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="727" y="332" text-anchor="middle" fill="#6B21A8">→ dti_results</text>
+    <text class="ns" x="727" y="350" text-anchor="middle" fill="#6B21A8">(dti_score · dti_level)</text>
+  </g>
+  <g>
+    <rect x="879" y="238" width="244" height="130" rx="10" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.5"/>
+    <text class="nt" x="1001" y="262" text-anchor="middle" font-size="12">collateral_evaluation</text>
+    <text class="ns" x="1001" y="279" text-anchor="middle">CollateralEvaluatorAgent</text>
+    <line x1="899" y1="291" x2="1103" y2="291" stroke="#E9D5FF"/>
+    <text class="chip" x="1001" y="310" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="1001" y="332" text-anchor="middle" fill="#6B21A8">→ collateral_results</text>
+    <text class="ns" x="1001" y="350" text-anchor="middle" fill="#6B21A8">(collateral_score)</text>
+  </g>
+
+  <!-- risk_assessment (Stage 2, single node consuming all four) -->
+  <rect x="330" y="442" width="520" height="62" rx="10" fill="#FAF5FF" stroke="#6B21A8" stroke-width="1.8"/>
+  <text class="nt" x="590" y="466" text-anchor="middle" font-size="12">risk_assessment · Stage 2</text>
+  <text class="ns" x="590" y="483" text-anchor="middle">RiskAssessmentAgent.analyze(applicant, credit, income, dti, collateral)</text>
+  <text class="ns" x="590" y="498" text-anchor="middle" fill="#6B21A8">→ risk_results (risk_score · risk_level · default_probability)</text>
+
+  <!-- coordinator -->
+  <rect x="360" y="538" width="460" height="70" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="590" y="560" text-anchor="middle" font-size="12">coordinator</text>
+  <text class="ns" x="590" y="578" text-anchor="middle">weighted 0.30·credit + 0.25·income + 0.20·dti + 0.15·collateral + 0.10·risk</text>
+  <text class="ns" x="590" y="596" text-anchor="middle" fill="#6B21A8">→ overall_risk_score · coordination_summary</text>
+
+  <!-- decision gate (3-band + terms) -->
+  <rect x="310" y="634" width="560" height="112" rx="10" fill="#FFFFFF" stroke="#6B21A8" stroke-width="2.2"/>
+  <text class="nt" x="590" y="657" text-anchor="middle" fill="#0F172A">◆ decision · add_conditional_edges · owns the terms</text>
+  <text class="ns" x="590" y="678" text-anchor="middle">overall_risk_score ≥ 8.0 → APPROVED</text>
+  <text class="ns" x="590" y="696" text-anchor="middle">else ≥ 6.0 · dti_level = IDEAL → APPROVED</text>
+  <text class="ns" x="590" y="714" text-anchor="middle">else ≥ 5.0 → CONDITIONAL_APPROVAL · else → DENIED</text>
+  <text class="chip" x="590" y="734" text-anchor="middle">+ approved_amount · approved_interest_rate · approved_term_months · monthly_payment</text>
+
+  <!-- officer_review (HITL node) -->
+  <rect x="730" y="784" width="230" height="58" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+  <text class="nt" x="845" y="808" text-anchor="middle" fill="#92400E" font-size="12">officer_review</text>
+  <text class="ns" x="845" y="825" text-anchor="middle" fill="#92400E">interrupt() · pause on checkpointer</text>
+
+  <!-- HITL band -->
+  <rect x="560" y="876" width="475" height="158" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="grp" x="576" y="898" fill="#B45309">HUMAN-IN-THE-LOOP · interrupt() → Command(resume={"action": …})</text>
+  <rect x="650" y="914" width="230" height="48" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+  <text class="nt" x="765" y="934" text-anchor="middle" fill="#0F172A" font-size="12">Loan officer decision</text>
+  <text class="ns" x="765" y="950" text-anchor="middle">approve / override → human_decision</text>
+  <text class="ns" x="797" y="1006" text-anchor="middle" fill="#B45309">approve → &lt;DECISION&gt;_confirmed · override → officer_overridden</text>
+
+  <!-- report -->
+  <rect x="420" y="1072" width="340" height="58" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.8"/>
+  <text class="nt" x="590" y="1096" text-anchor="middle" font-size="12">report</text>
+  <text class="ns" x="590" y="1114" text-anchor="middle">fold human_decision → final decision + terms · workflow_complete</text>
+
+  <!-- END -->
+  <rect x="535" y="1170" width="110" height="34" rx="17" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.8"/>
+  <text class="pill" x="590" y="1192" text-anchor="middle" fill="#166534">END</text>
+  <text class="ns" x="660" y="1191" text-anchor="start" fill="#475569">report.decision · workflow_complete = True</text>
+
+  <!-- ===== connectors ===== -->
+  <path class="flow" d="M590 106 V124" marker-end="url(#arrow)"/>
+  <rect x="600" y="106" width="166" height="14" fill="#FFFFFF"/>
+  <text class="el" x="604" y="117" text-anchor="start">run_application(applicant)</text>
+
+  <!-- fan-out validate → 4 Stage-1 -->
+  <path class="flow" d="M590 178 V196 H179 V238" marker-end="url(#arrow)"/>
+  <path class="flow" d="M590 178 V196 H453 V238" marker-end="url(#arrow)"/>
+  <path class="flow" d="M590 178 V196 H727 V238" marker-end="url(#arrow)"/>
+  <path class="flow" d="M590 178 V196 H1001 V238" marker-end="url(#arrow)"/>
+
+  <!-- Stage 1 → risk_assessment (fan-in: waits for ALL four) -->
+  <path class="flow" d="M179 368 V404"/>
+  <path class="flow" d="M453 368 V404"/>
+  <path class="flow" d="M727 368 V404"/>
+  <path class="flow" d="M1001 368 V404"/>
+  <path class="flow" d="M179 404 H1001"/>
+  <path class="flow" d="M590 404 V442" marker-end="url(#arrow)"/>
+  <rect x="611" y="414" width="384" height="15" fill="#FFFFFF"/>
+  <text class="el" x="615" y="426" text-anchor="start" fill="#6B21A8">fan-in: add_edge(STAGE1_NODES → risk_assessment) · waits for ALL four</text>
+
+  <path class="flow" d="M590 504 V538" marker-end="url(#arrow)"/>
+  <path class="flow" d="M590 608 V634" marker-end="url(#arrow)"/>
+
+  <!-- decision → report (APPROVED) -->
+  <path class="flow" d="M480 746 V1072" marker-end="url(#arrow)"/>
+  <rect x="437" y="764" width="86" height="15" fill="#FFFFFF"/>
+  <text class="el" x="480" y="776" text-anchor="middle" fill="#047857">APPROVED</text>
+
+  <!-- decision → officer_review (CONDITIONAL / DENIED) -->
+  <path class="flow" d="M700 746 V766 H845 V784" marker-end="url(#arrow)"/>
+  <rect x="704" y="758" width="196" height="15" fill="#FFFFFF"/>
+  <text class="el" x="802" y="770" text-anchor="middle" fill="#B45309">route_after_decision → officer_review</text>
+
+  <!-- officer_review → HITL band -->
+  <path class="flow" d="M845 842 V876" marker-end="url(#arrow)"/>
+
+  <!-- HITL resume → report -->
+  <path class="flow" d="M620 1034 V1072" marker-end="url(#arrow)"/>
+  <rect x="626" y="1042" width="150" height="15" fill="#FFFBEB"/>
+  <text class="el" x="632" y="1054" text-anchor="start" fill="#B45309">resume → report</text>
+
+  <!-- report → END -->
+  <path class="flow" d="M590 1130 V1170" marker-end="url(#arrow)"/>
+
+  <!-- report → loan store -->
+  <path class="mem" d="M760 1101 H1055" marker-end="url(#arrowMem)"/>
+  <rect x="840" y="1093" width="80" height="15" fill="#FFFFFF"/>
+  <text class="el" x="880" y="1105" text-anchor="middle" fill="#6B21A8">save_loan</text>
+
+  <!-- officer_review → checkpointer -->
+  <path class="mem" d="M960 811 H1055" marker-end="url(#arrowMem)"/>
+  <rect x="968" y="803" width="106" height="15" fill="#FFFFFF"/>
+  <text class="el" x="1021" y="815" text-anchor="middle" fill="#6B21A8">durable checkpoint</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(40,1190)">
+    <text class="grp" x="0" y="0" fill="#334155">Legend</text>
+    <rect x="0" y="9" width="16" height="16" rx="3" fill="#FAF5FF" stroke="#6B21A8"/>
+    <text class="lg" x="22" y="22">pure-LLM agent node</text>
+    <rect x="170" y="9" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text class="lg" x="192" y="22">deterministic node</text>
+    <rect x="350" y="9" width="16" height="16" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+    <text class="lg" x="372" y="22">loan-officer HITL (interrupt)</text>
+    <rect x="555" y="9" width="16" height="16" rx="3" fill="#ECFDF5" stroke="#16A34A"/>
+    <text class="lg" x="577" y="22">END</text>
+    <line class="mem" x1="635" y1="18" x2="675" y2="18" marker-end="url(#arrowMem)"/>
+    <text class="lg" x="683" y="22">SQLite checkpointer / loan store I/O</text>
+  </g>
+</svg>
