@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1700" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowLoop" markerWidth="12" markerHeight="12" refX="9" refY="3.6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,3.6 L0,7.2 Z" fill="#1E3A8A"/></marker>
+    <marker id="arrowEsc" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#B45309"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1E3A8A"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12px; fill:#64748B; }
+    .nt { font-size:13px; font-weight:700; fill:#1E3A8A; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .chip { font-size:9.5px; font-weight:600; fill:#1E3A8A; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .eesc { font-size:10px; fill:#B45309; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#1E3A8A; }
+    .lg { font-size:11px; fill:#334155; }
+    .cal { font-size:9.5px; fill:#1E40AF; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .esc { stroke:#B45309; stroke-width:1.8; fill:none; }
+    .loop { stroke:#1E3A8A; stroke-width:2.4; fill:none; }
+    .mem { stroke:#1E3A8A; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+
+  <rect x="0" y="0" width="1280" height="1700" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="42">Customer Support Desk — LangGraph</text>
+  <text class="subtitle" x="41" y="64">StateGraph · 14 nodes · validate → planner ‖ sentiment → triage → classify → retrieve (TOOL) → resolve → GROUNDING GATE → qa → RETRY CYCLE → respond</text>
+
+  <!-- ============================ MAIN COLUMN (x 300..820, cx 560) ============================ -->
+
+  <rect x="505" y="86" width="110" height="34" rx="17" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.4"/>
+  <text class="nt" x="560" y="108" text-anchor="middle">START</text>
+
+  <!-- validate -->
+  <rect x="300" y="150" width="520" height="76" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="560" y="172" text-anchor="middle" font-size="12">validate · DETERMINISTIC</text>
+  <text class="ns" x="560" y="191" text-anchor="middle">REQUIRED_FIELDS · at least MIN_QUERY_LENGTH characters</text>
+  <text class="ns" x="560" y="209" text-anchor="middle" fill="#B45309">otherwise → record_flagged = True · no agent is ever called</text>
+
+  <!-- parallel band -->
+  <rect x="260" y="254" width="600" height="152" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="276" y="274">2 in parallel</text>
+  <g>
+    <rect x="285" y="286" width="260" height="106" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text class="nt" x="415" y="308" text-anchor="middle" font-size="12">planner</text>
+    <text class="ns" x="415" y="325" text-anchor="middle">PlannerAgent</text>
+    <line x1="305" y1="337" x2="525" y2="337" stroke="#BFDBFE"/>
+    <text class="chip" x="415" y="354" text-anchor="middle">LLM · urgency 0–10</text>
+    <text class="ns" x="415" y="374" text-anchor="middle" fill="#1E3A8A">→ plan_results</text>
+  </g>
+  <g>
+    <rect x="575" y="286" width="260" height="106" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text class="nt" x="705" y="308" text-anchor="middle" font-size="12">sentiment</text>
+    <text class="ns" x="705" y="325" text-anchor="middle">SentimentAgent</text>
+    <line x1="595" y1="337" x2="815" y2="337" stroke="#BFDBFE"/>
+    <text class="chip" x="705" y="354" text-anchor="middle">LLM · sentiment 0–10</text>
+    <text class="ns" x="705" y="374" text-anchor="middle" fill="#1E3A8A">→ sentiment_results</text>
+  </g>
+
+  <!-- triage -->
+  <rect x="300" y="440" width="520" height="86" rx="10" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+  <text class="nt" x="560" y="462" text-anchor="middle" font-size="12">triage — the fan-in (waits for BOTH) · DETERMINISTIC</text>
+  <text class="ns" x="560" y="481" text-anchor="middle">escalate if sentiment_score &lt; 3.0, or urgency_level = CRITICAL,</text>
+  <text class="ns" x="560" y="498" text-anchor="middle">or the planner judged urgency_judgement ≥ 8.0</text>
+  <text class="ns" x="560" y="516" text-anchor="middle" fill="#1E3A8A">→ escalation_needed · escalation_reason</text>
+
+  <!-- classify -->
+  <rect x="300" y="560" width="520" height="72" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+  <text class="nt" x="560" y="582" text-anchor="middle" font-size="12">classify</text>
+  <text class="ns" x="560" y="601" text-anchor="middle">ClassifierAgent · LLM · category · subcategory · confidence 0–10</text>
+  <text class="ns" x="560" y="619" text-anchor="middle" fill="#1E3A8A">→ classification_results</text>
+
+  <!-- retrieve -->
+  <rect x="300" y="666" width="520" height="90" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="560" y="688" text-anchor="middle" font-size="12">retrieve — a TOOL CALL · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="560" y="707" text-anchor="middle">search_knowledge_base(query, category) · narrows to the category</text>
+  <text class="ns" x="560" y="724" text-anchor="middle">only when confidence ≥ confident_classification (6.0)</text>
+  <text class="ns" x="560" y="745" text-anchor="middle" fill="#1E3A8A">→ kb_articles · returning NOTHING is a valid answer</text>
+
+  <!-- resolve -->
+  <rect x="300" y="790" width="520" height="90" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+  <text class="nt" x="560" y="812" text-anchor="middle" font-size="12">resolve — the head of the retry cycle</text>
+  <text class="ns" x="560" y="831" text-anchor="middle">ResolverAgent · LLM · answers ONLY from kb_articles, and cites them</text>
+  <text class="ns" x="560" y="848" text-anchor="middle">on a retry, qa_feedback carries WHY the last draft was rejected</text>
+  <text class="ns" x="560" y="869" text-anchor="middle" fill="#1E3A8A">→ resolution_results (resolution · cited_article_ids · can_resolve)</text>
+
+  <!-- grounding_check -->
+  <rect x="300" y="914" width="520" height="100" rx="10" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+  <text class="nt" x="560" y="936" text-anchor="middle" font-size="12">grounding_check · THE GATE · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="560" y="955" text-anchor="middle">retrieved = what the knowledge base returned</text>
+  <text class="ns" x="560" y="972" text-anchor="middle">cited = the article IDs the resolver claims it used</text>
+  <text class="ns" x="560" y="993" text-anchor="middle" fill="#B45309">escalate unless cited is a NON-EMPTY SUBSET of retrieved</text>
+  <text class="ns" x="560" y="1008" text-anchor="middle" fill="#1E3A8A">→ grounded</text>
+
+  <!-- qa -->
+  <rect x="300" y="1048" width="520" height="72" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+  <text class="nt" x="560" y="1070" text-anchor="middle" font-size="12">qa</text>
+  <text class="ns" x="560" y="1089" text-anchor="middle">QualityAssuranceAgent · LLM · accuracy · relevance · tone · completeness</text>
+  <text class="ns" x="560" y="1107" text-anchor="middle" fill="#1E3A8A">→ qa_results (quality_score · is_approved · improvement_feedback)</text>
+
+  <!-- qa_check -->
+  <rect x="300" y="1154" width="520" height="104" rx="10" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+  <text class="nt" x="560" y="1176" text-anchor="middle" font-size="12">qa_check · THE CYCLE CONTROLLER · DETERMINISTIC</text>
+  <text class="ns" x="560" y="1195" text-anchor="middle">approved only if is_approved AND quality_score ≥ quality_threshold (7.0)</text>
+  <text class="ns" x="560" y="1212" text-anchor="middle">resolution_attempts + 1 · retry while below max_resolution_attempts (2)</text>
+  <text class="ns" x="560" y="1233" text-anchor="middle" fill="#1E3A8A">→ retry_resolution · qa_feedback</text>
+  <text class="ns" x="560" y="1249" text-anchor="middle" fill="#1E3A8A">this node alone owns the loop decision — the router only READS the flag</text>
+
+  <!-- followup -->
+  <rect x="300" y="1292" width="520" height="66" rx="10" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5"/>
+  <text class="nt" x="560" y="1314" text-anchor="middle" font-size="12">followup</text>
+  <text class="ns" x="560" y="1333" text-anchor="middle">FollowUpAgent · LLM · needed? · priority · timeline · actions</text>
+  <text class="ns" x="560" y="1350" text-anchor="middle" fill="#1E3A8A">→ followup_results</text>
+
+  <!-- respond -->
+  <rect x="300" y="1392" width="520" height="86" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="560" y="1414" text-anchor="middle" font-size="12">respond · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="560" y="1433" text-anchor="middle">the automation's answer, or the human's · PRIORITY and ACTION_ITEMS</text>
+  <text class="ns" x="560" y="1450" text-anchor="middle">are both keyed by outcome (RESOLVED / ESCALATED)</text>
+  <text class="ns" x="560" y="1468" text-anchor="middle" fill="#1E3A8A">→ final_response · conversation_history · report · workflow_complete</text>
+
+  <!-- END -->
+  <rect x="505" y="1546" width="110" height="34" rx="17" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.8"/>
+  <text class="pill" x="560" y="1568" text-anchor="middle" fill="#166534">END</text>
+
+  <!-- ============================ ESCALATION COLUMN ============================ -->
+
+  <rect x="940" y="1300" width="310" height="90" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.6"/>
+  <text class="nt" x="1095" y="1322" text-anchor="middle" font-size="12" fill="#92400E">escalate</text>
+  <text class="ns" x="1095" y="1340" text-anchor="middle" fill="#92400E">EscalationAgent · LLM</text>
+  <text class="ns" x="1095" y="1357" text-anchor="middle" fill="#92400E">prepare the handover packet</text>
+  <text class="ns" x="1095" y="1377" text-anchor="middle" fill="#B45309">SKIPPED when record_flagged</text>
+
+  <rect x="940" y="1424" width="310" height="96" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.8"/>
+  <text class="nt" x="1095" y="1446" text-anchor="middle" font-size="12" fill="#92400E">human_review · HITL</text>
+  <text class="ns" x="1095" y="1464" text-anchor="middle" fill="#92400E">interrupt() · pause on the checkpointer</text>
+  <text class="ns" x="1095" y="1482" text-anchor="middle" fill="#92400E">the human WRITES the answer</text>
+  <text class="ns" x="1095" y="1502" text-anchor="middle" fill="#B45309">Command(resume={action, feedback})</text>
+
+  <!-- ============================ STORES ============================ -->
+  <g>
+    <rect x="1000" y="1586" width="190" height="46" fill="#F1F5F9" stroke="none"/>
+    <line x1="1000" y1="1586" x2="1000" y2="1632" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1190" y1="1586" x2="1190" y2="1632" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1095" cy="1632" rx="95" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1095" cy="1586" rx="95" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1095" y="1608" text-anchor="middle" fill="#334155" font-size="12">SqliteSaver</text>
+    <text class="ns" x="1095" y="1623" text-anchor="middle" fill="#334155">checkpoints.db (1 file)</text>
+  </g>
+  <g>
+    <rect x="60" y="1510" width="190" height="46" fill="#F1F5F9" stroke="none"/>
+    <line x1="60" y1="1510" x2="60" y2="1556" stroke="#475569" stroke-width="1.3"/>
+    <line x1="250" y1="1510" x2="250" y2="1556" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="155" cy="1556" rx="95" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="155" cy="1510" rx="95" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="155" y="1532" text-anchor="middle" fill="#334155" font-size="12">Support store</text>
+    <text class="ns" x="155" y="1547" text-anchor="middle" fill="#334155">support.db</text>
+  </g>
+
+  <!-- ============================ CONNECTORS ============================ -->
+
+  <path class="flow" d="M560 120 V146" marker-end="url(#arrow)"/>
+  <text class="el" x="572" y="139">handle_query(query, thread_id)</text>
+
+  <!-- validate -> the parallel pair -->
+  <path class="flow" d="M560 226 V240"/>
+  <path class="flow" d="M415 240 H705"/>
+  <path class="flow" d="M415 240 V282" marker-end="url(#arrow)"/>
+  <path class="flow" d="M705 240 V282" marker-end="url(#arrow)"/>
+  <text class="el" x="572" y="235">valid → route_after_validation returns a LIST</text>
+
+  <!-- fan-in -> triage -->
+  <path class="flow" d="M415 392 V420 H705 V392"/>
+  <path class="flow" d="M560 420 V436" marker-end="url(#arrow)"/>
+  <text class="el" x="560" y="414" text-anchor="middle">add_edge(PARALLEL_NODES, "triage")</text>
+
+  <path class="flow" d="M560 526 V556" marker-end="url(#arrow)"/>
+  <text class="el" x="572" y="547">proceed</text>
+
+  <path class="flow" d="M560 632 V662" marker-end="url(#arrow)"/>
+  <path class="flow" d="M560 756 V786" marker-end="url(#arrow)"/>
+  <path class="flow" d="M560 880 V910" marker-end="url(#arrow)"/>
+
+  <path class="flow" d="M560 1014 V1044" marker-end="url(#arrow)"/>
+  <text class="el" x="572" y="1035">grounded</text>
+
+  <path class="flow" d="M560 1120 V1150" marker-end="url(#arrow)"/>
+
+  <path class="flow" d="M560 1258 V1288" marker-end="url(#arrow)"/>
+  <text class="el" x="572" y="1279">approved</text>
+
+  <path class="flow" d="M560 1358 V1388" marker-end="url(#arrow)"/>
+  <path class="flow" d="M560 1478 V1542" marker-end="url(#arrow)"/>
+
+  <!-- ===== THE RETRY CYCLE: qa_check -> resolve ===== -->
+  <path class="loop" d="M300 1206 H145 V835 H296" marker-end="url(#arrowLoop)"/>
+  <text class="cal" x="135" y="1000" text-anchor="end">rejected, and</text>
+  <text class="cal" x="135" y="1014" text-anchor="end">attempts remain →</text>
+  <text class="cal" x="135" y="1028" text-anchor="end">retry_resolution = True</text>
+
+  <!-- ===== FOUR ESCALATION OFF-RAMPS, ONE DESTINATION ===== -->
+  <path class="esc" d="M820 188 H880 V1345 H936" marker-end="url(#arrowEsc)"/>
+  <path class="esc" d="M820 483 H880"/>
+  <path class="esc" d="M820 964 H880"/>
+  <path class="esc" d="M820 1204 H880"/>
+  <circle cx="880" cy="483" r="3.2" fill="#B45309"/>
+  <circle cx="880" cy="964" r="3.2" fill="#B45309"/>
+  <circle cx="880" cy="1204" r="3.2" fill="#B45309"/>
+
+  <text class="eesc" x="890" y="184">unusable message</text>
+  <text class="eesc" x="890" y="479">needs a person now</text>
+  <text class="eesc" x="890" y="954">ungrounded, or a</text>
+  <text class="eesc" x="890" y="978">FABRICATED citation</text>
+  <text class="eesc" x="890" y="1200">rejected, out of attempts</text>
+
+  <path class="flow" d="M1095 1390 V1420" marker-end="url(#arrow)"/>
+
+  <!-- human_review -> respond -->
+  <path class="flow" d="M940 1472 H870 V1435 H824" marker-end="url(#arrow)"/>
+  <text class="el" x="862" y="1428" text-anchor="end">answer / override</text>
+
+  <!-- persistence -->
+  <path class="mem" d="M1095 1520 V1575" marker-end="url(#arrowMem)"/>
+  <path class="mem" d="M300 1435 H155 V1499" marker-end="url(#arrowMem)"/>
+  <text class="cal" x="292" y="1428" text-anchor="end">save_conversation</text>
+
+  <!-- ============================ CALLOUT ============================ -->
+  <rect x="915" y="560" width="345" height="376" rx="10" fill="#F8FAFC" stroke="#1E3A8A" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text class="grp" x="1087" y="586" text-anchor="middle">THE GROUNDING GATE</text>
+  <text class="cal" x="933" y="612">A support system that invents a procedure</text>
+  <text class="cal" x="933" y="628">and tells a customer to follow it does real</text>
+  <text class="cal" x="933" y="644">harm. Someone will spend their afternoon</text>
+  <text class="cal" x="933" y="660">looking for a menu that does not exist, and</text>
+  <text class="cal" x="933" y="676">then trust nothing we say afterwards.</text>
+  <text class="cal" x="933" y="702">So it is not enough for the resolver to CLAIM</text>
+  <text class="cal" x="933" y="718">it used the knowledge base. The claim has</text>
+  <text class="cal" x="933" y="734">to be CHECKABLE — so the resolver must</text>
+  <text class="cal" x="933" y="750">name the article IDs it used, and this node</text>
+  <text class="cal" x="933" y="766">compares them against what retrieval</text>
+  <text class="cal" x="933" y="782">actually returned. Set arithmetic:</text>
+  <text class="cal" x="933" y="812" fill="#B45309">1. can_resolve is False</text>
+  <text class="cal" x="933" y="830" fill="#B45309">2. nothing was retrieved</text>
+  <text class="cal" x="933" y="848" fill="#B45309">3. cited ⊄ retrieved — A FABRICATION</text>
+  <text class="cal" x="933" y="866" fill="#B45309">4. cited is empty</text>
+  <text class="cal" x="933" y="896">All four end with a human, never with a</text>
+  <text class="cal" x="933" y="912">guess. Zero tokens, fully testable offline.</text>
+
+  <!-- ============================ LEGEND ============================ -->
+  <g transform="translate(40,1660)">
+    <rect x="0" y="0" width="18" height="12" rx="3" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.4"/>
+    <text class="lg" x="26" y="10">LLM agent node</text>
+    <rect x="150" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+    <text class="lg" x="176" y="10">deterministic node</text>
+    <rect x="310" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+    <text class="lg" x="336" y="10">deterministic gate / router</text>
+    <rect x="520" y="0" width="18" height="12" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+    <text class="lg" x="546" y="10">escalation / human-in-the-loop</text>
+    <line x1="760" y1="6" x2="796" y2="6" stroke="#1E3A8A" stroke-width="2.4"/>
+    <text class="lg" x="804" y="10">the retry cycle</text>
+    <line x1="910" y1="6" x2="946" y2="6" stroke="#B45309" stroke-width="1.8"/>
+    <text class="lg" x="954" y="10">escalation off-ramp</text>
+    <line x1="1090" y1="6" x2="1126" y2="6" stroke="#1E3A8A" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <text class="lg" x="1134" y="10">persistence</text>
+  </g>
+</svg>
