@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1660" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowLoop" markerWidth="12" markerHeight="12" refX="9" refY="3.6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,3.6 L0,7.2 Z" fill="#4F46E5"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#4F46E5"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12px; fill:#64748B; }
+    .nt { font-size:13px; font-weight:700; fill:#312E81; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .chip { font-size:9.5px; font-weight:600; fill:#4F46E5; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .grp { font-size:11px; font-weight:600; fill:#4F46E5; }
+    .lg { font-size:11px; fill:#334155; }
+    .cal { font-size:9.5px; fill:#3730A3; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .loop { stroke:#4F46E5; stroke-width:2.4; fill:none; }
+    .mem { stroke:#4F46E5; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+
+  <rect x="0" y="0" width="1280" height="1660" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="42">Social Media Post Optimizer — LangGraph</text>
+  <text class="subtitle" x="41" y="64">StateGraph · validate → 5 analyses in parallel → coordinator (baseline) → BOUNDED REFINEMENT CYCLE → decision → schedule / manager HITL · SqliteSaver</text>
+
+  <!-- checkpointer store -->
+  <g>
+    <rect x="1090" y="1140" width="170" height="50" fill="#F1F5F9" stroke="none"/>
+    <line x1="1090" y1="1140" x2="1090" y2="1190" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1260" y1="1140" x2="1260" y2="1190" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1175" cy="1190" rx="85" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1175" cy="1140" rx="85" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1175" y="1164" text-anchor="middle" fill="#334155" font-size="12">SqliteSaver</text>
+    <text class="ns" x="1175" y="1179" text-anchor="middle" fill="#334155">checkpoints.db (1 file)</text>
+  </g>
+  <!-- post store -->
+  <g>
+    <rect x="1090" y="1442" width="170" height="50" fill="#F1F5F9" stroke="none"/>
+    <line x1="1090" y1="1442" x2="1090" y2="1492" stroke="#475569" stroke-width="1.3"/>
+    <line x1="1260" y1="1442" x2="1260" y2="1492" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1175" cy="1492" rx="85" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/>
+    <ellipse cx="1175" cy="1442" rx="85" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/>
+    <text class="nt" x="1175" y="1466" text-anchor="middle" fill="#334155" font-size="12">Post store</text>
+    <text class="ns" x="1175" y="1481" text-anchor="middle" fill="#334155">posts.db</text>
+  </g>
+
+  <!-- START -->
+  <rect x="585" y="72" width="110" height="34" rx="17" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.4"/>
+  <text class="nt" x="640" y="94" text-anchor="middle">START</text>
+
+  <!-- validate -->
+  <rect x="360" y="124" width="560" height="72" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="640" y="146" text-anchor="middle" font-size="12">validate</text>
+  <text class="ns" x="640" y="165" text-anchor="middle">REQUIRED_FIELDS · content not empty · already within the PLATFORM_LIMITS cap</text>
+  <text class="ns" x="640" y="183" text-anchor="middle" fill="#4F46E5">otherwise → record_flagged = True · no agent is ever called</text>
+
+  <!-- analysis band (5 parallel) -->
+  <rect x="42" y="220" width="1196" height="180" rx="12" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.3" stroke-dasharray="6 5"/>
+  <text class="grp" x="58" y="240">5 in parallel</text>
+  <g>
+    <rect x="57" y="252" width="214" height="130" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="164" y="276" text-anchor="middle" font-size="12">engagement</text>
+    <text class="ns" x="164" y="293" text-anchor="middle">EngagementAgent</text>
+    <line x1="77" y1="305" x2="251" y2="305" stroke="#C7D2FE"/>
+    <text class="chip" x="164" y="324" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="164" y="346" text-anchor="middle" fill="#4F46E5">→ engagement_results</text>
+    <text class="ns" x="164" y="364" text-anchor="middle" fill="#4F46E5">(engagement_score)</text>
+  </g>
+  <g>
+    <rect x="295" y="252" width="214" height="130" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="402" y="276" text-anchor="middle" font-size="12">hashtag</text>
+    <text class="ns" x="402" y="293" text-anchor="middle">HashtagAgent</text>
+    <line x1="315" y1="305" x2="489" y2="305" stroke="#C7D2FE"/>
+    <text class="chip" x="402" y="324" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="402" y="346" text-anchor="middle" fill="#4F46E5">→ hashtag_results</text>
+    <text class="ns" x="402" y="364" text-anchor="middle" fill="#4F46E5">(hashtag_score)</text>
+  </g>
+  <g>
+    <rect x="533" y="252" width="214" height="130" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="640" y="276" text-anchor="middle" font-size="12">sentiment</text>
+    <text class="ns" x="640" y="293" text-anchor="middle">SentimentAgent</text>
+    <line x1="553" y1="305" x2="727" y2="305" stroke="#C7D2FE"/>
+    <text class="chip" x="640" y="324" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="640" y="346" text-anchor="middle" fill="#4F46E5">→ sentiment_results</text>
+    <text class="ns" x="640" y="364" text-anchor="middle" fill="#4F46E5">(sentiment_score · controversy_risk)</text>
+  </g>
+  <g>
+    <rect x="771" y="252" width="214" height="130" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="878" y="276" text-anchor="middle" font-size="12">timing</text>
+    <text class="ns" x="878" y="293" text-anchor="middle">TimingAgent</text>
+    <line x1="791" y1="305" x2="965" y2="305" stroke="#C7D2FE"/>
+    <text class="chip" x="878" y="324" text-anchor="middle">LLM · score 0–10</text>
+    <text class="ns" x="878" y="346" text-anchor="middle" fill="#4F46E5">→ timing_results</text>
+    <text class="ns" x="878" y="364" text-anchor="middle" fill="#4F46E5">(timing_score)</text>
+  </g>
+  <g>
+    <rect x="1009" y="252" width="214" height="130" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+    <text class="nt" x="1116" y="276" text-anchor="middle" font-size="12">visual</text>
+    <text class="ns" x="1116" y="293" text-anchor="middle">VisualAgent</text>
+    <line x1="1029" y1="305" x2="1203" y2="305" stroke="#C7D2FE"/>
+    <text class="chip" x="1116" y="324" text-anchor="middle">SKIPS if no media</text>
+    <text class="ns" x="1116" y="346" text-anchor="middle" fill="#4F46E5">→ visual_results</text>
+    <text class="ns" x="1116" y="364" text-anchor="middle" fill="#4F46E5">(visual_score)</text>
+  </g>
+
+  <!-- coordinator -->
+  <rect x="300" y="450" width="680" height="88" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="640" y="472" text-anchor="middle" font-size="12">coordinator — the BASELINE: the post AS SUBMITTED</text>
+  <text class="ns" x="640" y="491" text-anchor="middle">weights_for(post): 0.30·engagement + 0.20·hashtag + 0.20·sentiment + 0.20·visual + 0.10·timing</text>
+  <text class="ns" x="640" y="509" text-anchor="middle">no media → the visual weight is REDISTRIBUTED, so a flawless text post can still reach 10</text>
+  <text class="chip" x="640" y="529" text-anchor="middle">→ baseline_rating · baseline_summary</text>
+
+  <!-- THE CYCLE callout -->
+  <rect x="1000" y="880" width="260" height="212" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="grp" x="1130" y="902" text-anchor="middle">THE REFINEMENT CYCLE</text>
+  <text class="cal" x="1016" y="924">The rewrite must PROVE it helped —</text>
+  <text class="cal" x="1016" y="940">asserting it is not enough.</text>
+  <text class="cal" x="1016" y="962">refine_check is the SINGLE OWNER of</text>
+  <text class="cal" x="1016" y="978">the loop decision: it sets retry_rewrite.</text>
+  <text class="cal" x="1016" y="994">route_after_refine_check only READS it.</text>
+  <text class="cal" x="1016" y="1016">revision_count only ever increases and</text>
+  <text class="cal" x="1016" y="1032">is capped at max_revisions = 2, so the</text>
+  <text class="cal" x="1016" y="1048">loop is BOUNDED by construction.</text>
+  <text class="cal" x="1016" y="1070">Out of attempts → the ORIGINAL post</text>
+  <text class="cal" x="1016" y="1086">is carried forward.</text>
+
+  <!-- optimizer (head of the cycle) -->
+  <rect x="340" y="572" width="520" height="80" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.8"/>
+  <text class="nt" x="600" y="596" text-anchor="middle" font-size="12">optimizer — the head of the cycle</text>
+  <text class="ns" x="600" y="614" text-anchor="middle">ContentOptimizerAgent.analyze(post, baseline_summary, revision_feedback)</text>
+  <text class="chip" x="600" y="636" text-anchor="middle">→ optimized_content · selected_hashtags · key_improvements</text>
+
+  <!-- rescore -->
+  <rect x="340" y="686" width="520" height="94" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.8"/>
+  <text class="nt" x="600" y="708" text-anchor="middle" font-size="12">rescore</text>
+  <text class="ns" x="600" y="726" text-anchor="middle">RescoreAgent.analyze(post, optimized_content, selected_hashtags)</text>
+  <text class="ns" x="600" y="744" text-anchor="middle">scores the REWRITE, not the original — only the 3 axes a rewrite can move</text>
+  <text class="chip" x="600" y="764" text-anchor="middle">→ rescore_results (engagement · sentiment · hashtag · remaining_gaps)</text>
+
+  <!-- refine_check (the cycle controller) -->
+  <rect x="290" y="800" width="620" height="132" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.2"/>
+  <text class="nt" x="600" y="824" text-anchor="middle" fill="#0F172A">◆ refine_check · the cycle controller · DETERMINISTIC</text>
+  <text class="ns" x="600" y="846" text-anchor="middle">accept the rewrite only if BOTH hold:</text>
+  <text class="ns" x="600" y="864" text-anchor="middle">1. IT FITS — within the platform's character limit</text>
+  <text class="ns" x="600" y="882" text-anchor="middle">2. IT'S BETTER — scores strictly above baseline_rating</text>
+  <text class="chip" x="600" y="904" text-anchor="middle">else → rejection_reason + remaining_gaps → revision_feedback</text>
+  <text class="chip" x="600" y="922" text-anchor="middle">→ rewrite_accepted · retry_rewrite · revision_count + 1 · retry while below max_revisions = 2</text>
+
+  <!-- decision -->
+  <rect x="300" y="966" width="680" height="136" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.2"/>
+  <text class="nt" x="640" y="990" text-anchor="middle" fill="#0F172A">◆ decision · BRAND-SAFETY GATE first, then the grade ladder</text>
+  <text class="ns" x="640" y="1012" text-anchor="middle" fill="#4F46E5">controversy_risk = HIGH → gate_reason → NEEDS_REVIEW, whatever the score</text>
+  <text class="ns" x="640" y="1030" text-anchor="middle">record_flagged → grade NOT_ASSESSED — never graded off its zeros</text>
+  <text class="ns" x="640" y="1048" text-anchor="middle">grade: ≥ 9.0 EXCELLENT · ≥ 8.0 VERY_GOOD · ≥ 7.0 GOOD · ≥ 6.0 FAIR · else NEEDS_WORK</text>
+  <text class="chip" x="640" y="1070" text-anchor="middle">final_rating ≥ publish_threshold 7.5 → READY · else → NEEDS_REVIEW</text>
+  <text class="chip" x="640" y="1088" text-anchor="middle">+ priority (PRIORITY map) · controversy_risk · gate_reason · decision_metrics</text>
+
+  <!-- manager_review (HITL) -->
+  <rect x="760" y="1136" width="260" height="58" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+  <text class="nt" x="890" y="1160" text-anchor="middle" fill="#92400E" font-size="12">manager_review</text>
+  <text class="ns" x="890" y="1177" text-anchor="middle" fill="#92400E">interrupt() · pause on checkpointer</text>
+
+  <!-- HITL band -->
+  <rect x="620" y="1226" width="480" height="150" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="grp" x="636" y="1248" fill="#B45309" font-size="10.5">HUMAN-IN-THE-LOOP · interrupt() → Command(resume={"action": …})</text>
+  <rect x="745" y="1264" width="230" height="48" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+  <text class="nt" x="860" y="1284" text-anchor="middle" fill="#0F172A" font-size="12">Manager decision</text>
+  <text class="ns" x="860" y="1300" text-anchor="middle">approve / override → human_decision</text>
+  <text class="ns" x="860" y="1350" text-anchor="middle" fill="#B45309">approve → &lt;DECISION&gt;_confirmed · override → manager_overridden</text>
+
+  <!-- schedule -->
+  <rect x="420" y="1436" width="440" height="62" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.8"/>
+  <text class="nt" x="640" y="1460" text-anchor="middle" font-size="12">schedule</text>
+  <text class="ns" x="640" y="1479" text-anchor="middle">original + rewrite side by side · improvement = final − baseline</text>
+
+  <!-- END -->
+  <rect x="585" y="1536" width="110" height="34" rx="17" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.8"/>
+  <text class="pill" x="640" y="1558" text-anchor="middle" fill="#166534">END</text>
+  <text class="ns" x="710" y="1557" text-anchor="start" fill="#475569">report.decision · grade · priority · workflow_complete = True</text>
+
+  <!-- ===== connectors ===== -->
+  <path class="flow" d="M640 106 V124" marker-end="url(#arrow)"/>
+  <rect x="650" y="106" width="170" height="14" fill="#FFFFFF"/>
+  <text class="el" x="654" y="117" text-anchor="start">run_optimization(post)</text>
+
+  <!-- fan-out validate → 5 analyses -->
+  <path class="flow" d="M640 196 V212 H164 V252" marker-end="url(#arrow)"/>
+  <path class="flow" d="M640 196 V212 H402 V252" marker-end="url(#arrow)"/>
+  <path class="flow" d="M640 196 V212 H640 V252" marker-end="url(#arrow)"/>
+  <path class="flow" d="M640 196 V212 H878 V252" marker-end="url(#arrow)"/>
+  <path class="flow" d="M640 196 V212 H1116 V252" marker-end="url(#arrow)"/>
+
+  <!-- 5 analyses → coordinator (fan-in: waits for ALL five) -->
+  <path class="flow" d="M164 382 V416"/>
+  <path class="flow" d="M402 382 V416"/>
+  <path class="flow" d="M640 382 V416"/>
+  <path class="flow" d="M878 382 V416"/>
+  <path class="flow" d="M1116 382 V416"/>
+  <path class="flow" d="M164 416 H1116"/>
+  <path class="flow" d="M640 416 V450" marker-end="url(#arrow)"/>
+  <rect x="662" y="424" width="400" height="15" fill="#FFFFFF"/>
+  <text class="el" x="666" y="436" text-anchor="start" fill="#4F46E5">fan-in: add_edge(ANALYSIS_NODES → coordinator) · waits for ALL five</text>
+
+  <path class="flow" d="M640 538 V572" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600 652 V686" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600 780 V800" marker-end="url(#arrow)"/>
+
+  <!-- ===== THE LOOP: refine_check -> optimizer ===== -->
+  <path class="loop" d="M910 866 H960 V612 H860" marker-end="url(#arrowLoop)"/>
+  <rect x="968" y="712" width="188" height="15" fill="#FFFFFF"/>
+  <text class="el" x="972" y="724" text-anchor="start" fill="#4F46E5">rejected, and attempts remain</text>
+  <rect x="968" y="730" width="188" height="15" fill="#FFFFFF"/>
+  <text class="el" x="972" y="742" text-anchor="start" fill="#4F46E5">→ retry_rewrite = True</text>
+  <rect x="676" y="944" width="312" height="15" fill="#FFFFFF"/>
+  <text class="el" x="832" y="956" text-anchor="middle" fill="#4F46E5">add_conditional_edges → accepted, or out of attempts</text>
+
+  <path class="flow" d="M600 932 V966" marker-end="url(#arrow)"/>
+
+  <!-- decision → schedule (READY) -->
+  <path class="flow" d="M440 1102 V1436" marker-end="url(#arrow)"/>
+  <rect x="330" y="1120" width="102" height="15" fill="#FFFFFF"/>
+  <text class="el" x="426" y="1132" text-anchor="end" fill="#047857">READY → schedule</text>
+
+  <!-- decision → manager_review (everything else) -->
+  <path class="flow" d="M860 1102 V1136" marker-end="url(#arrow)"/>
+  <rect x="866" y="1112" width="150" height="15" fill="#FFFFFF"/>
+  <text class="el" x="870" y="1124" text-anchor="start" fill="#B45309">NEEDS_REVIEW</text>
+
+  <!-- manager_review → HITL band -->
+  <path class="flow" d="M890 1194 V1226" marker-end="url(#arrow)"/>
+
+  <!-- HITL resume → schedule -->
+  <path class="flow" d="M700 1376 V1436" marker-end="url(#arrow)"/>
+  <rect x="560" y="1390" width="132" height="15" fill="#FFFBEB"/>
+  <text class="el" x="688" y="1402" text-anchor="end" fill="#B45309">resume → schedule</text>
+
+  <!-- schedule → END -->
+  <path class="flow" d="M640 1498 V1536" marker-end="url(#arrow)"/>
+
+  <!-- schedule → post store -->
+  <path class="mem" d="M860 1467 H1085" marker-end="url(#arrowMem)"/>
+  <rect x="900" y="1459" width="128" height="15" fill="#FFFFFF"/>
+  <text class="el" x="964" y="1471" text-anchor="middle" fill="#4F46E5">save_optimization</text>
+
+  <!-- manager_review → checkpointer -->
+  <path class="mem" d="M1020 1165 H1085" marker-end="url(#arrowMem)"/>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(40,1596)">
+    <text class="grp" x="0" y="0" fill="#334155">Legend</text>
+    <rect x="0" y="9" width="16" height="16" rx="3" fill="#EEF2FF" stroke="#4F46E5"/>
+    <text class="lg" x="22" y="22">pure-LLM agent node</text>
+    <rect x="170" y="9" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text class="lg" x="192" y="22">deterministic node</text>
+    <rect x="350" y="9" width="16" height="16" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+    <text class="lg" x="372" y="22">manager HITL (interrupt)</text>
+    <rect x="545" y="9" width="16" height="16" rx="3" fill="#ECFDF5" stroke="#16A34A"/>
+    <text class="lg" x="567" y="22">END</text>
+    <line class="loop" x1="625" y1="18" x2="665" y2="18" marker-end="url(#arrowLoop)"/>
+    <text class="lg" x="676" y="22">the refinement cycle (loop back to the rewriter)</text>
+  </g>
+</svg>
