@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 1660" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#64748B"/></marker>
+    <marker id="arrowEsc" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#B45309"/></marker>
+    <marker id="arrowRes" markerWidth="12" markerHeight="12" refX="9" refY="3.6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,3.6 L0,7.2 Z" fill="#0E7490"/></marker>
+    <marker id="arrowFlag" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#94A3B8"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#0E7490"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12px; fill:#64748B; }
+    .nt { font-size:12px; font-weight:700; fill:#155E75; }
+    .ns { font-size:10.5px; fill:#475569; }
+    .el { font-size:10px; fill:#475569; font-weight:600; }
+    .eesc { font-size:10px; fill:#B45309; font-weight:600; }
+    .eres { font-size:10px; fill:#0E7490; font-weight:600; }
+    .eflag { font-size:10px; fill:#64748B; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .lg { font-size:11px; fill:#334155; }
+    .cal { font-size:9.5px; fill:#155E75; }
+    .grp { font-size:11px; font-weight:600; fill:#155E75; }
+    .flow { stroke:#64748B; stroke-width:1.6; fill:none; }
+    .esc  { stroke:#B45309; stroke-width:1.8; fill:none; }
+    .res  { stroke:#0E7490; stroke-width:2.4; fill:none; }
+    .flag { stroke:#94A3B8; stroke-width:1.6; fill:none; stroke-dasharray:6 4; }
+    .mem  { stroke:#0E7490; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+  <rect x="0" y="0" width="1250" height="1660" fill="#FFFFFF"/>
+  <text class="title" x="40" y="40">Threat Intelligence Platform — LangGraph</text>
+  <text class="subtitle" x="41" y="62">StateGraph · 15 nodes · a genuinely LINEAR pipeline · two deterministic gates → one analyst_review → resume IN PLACE · SqliteSaver</text>
+  <rect x="375" y="54" width="110" height="34" rx="17" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.4"/>
+  <text class="pill" x="430" y="75.0" text-anchor="middle" fill="#155E75">START</text>
+  <rect x="200" y="104" width="460" height="66" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="430" y="123" text-anchor="middle">validate · DETERMINISTIC</text>
+  <text class="ns" x="430" y="141" text-anchor="middle" fill="#475569">at least MIN_THREAT_LENGTH (15) characters</text>
+  <text class="ns" x="430" y="157" text-anchor="middle" fill="#B45309">otherwise → record_flagged = True · no agent runs</text>
+  <rect x="200" y="196" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="215" text-anchor="middle">plan</text>
+  <text class="ns" x="430" y="233" text-anchor="middle" fill="#475569">PlannerAgent · frames the investigation</text>
+  <text class="ns" x="430" y="249" text-anchor="middle" fill="#155E75">→ plan_results</text>
+  <rect x="200" y="288" width="460" height="66" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="307" text-anchor="middle">detect</text>
+  <text class="ns" x="430" y="325" text-anchor="middle" fill="#475569">ThreatDetectorAgent · type · level · confidence 0–1</text>
+  <text class="ns" x="430" y="341" text-anchor="middle" fill="#155E75">→ detection_results (indicators)</text>
+  <rect x="200" y="382" width="460" height="84" rx="10" fill="#FFFFFF" stroke="#0E7490" stroke-width="2"/>
+  <text class="nt" x="430" y="401" text-anchor="middle">triage_detect · GATE 1 · DETERMINISTIC</text>
+  <text class="ns" x="430" y="419" text-anchor="middle" fill="#475569">escalate if level = critical,</text>
+  <text class="ns" x="430" y="435" text-anchor="middle" fill="#475569">or level = high AND confidence &lt; low_confidence (0.6)</text>
+  <text class="ns" x="430" y="451" text-anchor="middle" fill="#B45309">uncertainty RAISES review · escalation_stage = detection</text>
+  <rect x="200" y="494" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="513" text-anchor="middle">scan_vulns</text>
+  <text class="ns" x="430" y="531" text-anchor="middle" fill="#475569">VulnerabilityAgent · what is exposed</text>
+  <text class="ns" x="430" y="547" text-anchor="middle" fill="#155E75">→ vulnerability_results</text>
+  <rect x="200" y="586" width="460" height="72" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="430" y="605" text-anchor="middle">risk · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="430" y="623" text-anchor="middle" fill="#475569">risk_scoring_service · weighted mean of four 0–10 terms</text>
+  <text class="ns" x="430" y="639" text-anchor="middle" fill="#475569">confidence kept SEPARATE from impact · → risk_results</text>
+  <rect x="200" y="690" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="709" text-anchor="middle">classify</text>
+  <text class="ns" x="430" y="727" text-anchor="middle" fill="#475569">IncidentClassifierAgent · NIST category</text>
+  <text class="ns" x="430" y="743" text-anchor="middle" fill="#155E75">→ classification_results</text>
+  <rect x="200" y="782" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="801" text-anchor="middle">forensics</text>
+  <text class="ns" x="430" y="819" text-anchor="middle" fill="#475569">ForensicsAgent · root cause · attack chain</text>
+  <text class="ns" x="430" y="835" text-anchor="middle" fill="#155E75">→ forensics_results</text>
+  <rect x="200" y="874" width="460" height="72" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="430" y="893" text-anchor="middle">enrich · a TOOL · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="430" y="911" text-anchor="middle" fill="#475569">threat_intel_service · actors · malware · ATT&amp;CK IDs</text>
+  <text class="ns" x="430" y="927" text-anchor="middle" fill="#475569">a lookup cannot invent an actor · → intel_results</text>
+  <rect x="200" y="978" width="460" height="66" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="997" text-anchor="middle">respond</text>
+  <text class="ns" x="430" y="1015" text-anchor="middle" fill="#475569">ResponseCoordinatorAgent · IR plan</text>
+  <text class="ns" x="430" y="1031" text-anchor="middle" fill="#155E75">→ response_results (manual_actions_required)</text>
+  <rect x="200" y="1074" width="460" height="96" rx="10" fill="#FFFFFF" stroke="#0E7490" stroke-width="2"/>
+  <text class="nt" x="430" y="1093" text-anchor="middle">triage_response · GATE 2 · DETERMINISTIC</text>
+  <text class="ns" x="430" y="1111" text-anchor="middle" fill="#475569">skip if already reviewed — one review per incident</text>
+  <text class="ns" x="430" y="1127" text-anchor="middle" fill="#475569">else escalate if risk ≥ escalate_risk_score (8.5),</text>
+  <text class="ns" x="430" y="1143" text-anchor="middle" fill="#475569">or manual_actions &gt; max_manual_actions (5)</text>
+  <text class="ns" x="430" y="1159" text-anchor="middle" fill="#475569">escalation_stage = response</text>
+  <rect x="200" y="1198" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="1217" text-anchor="middle">comply</text>
+  <text class="ns" x="430" y="1235" text-anchor="middle" fill="#475569">ComplianceCheckerAgent · regulatory obligations</text>
+  <text class="ns" x="430" y="1251" text-anchor="middle" fill="#155E75">→ compliance_results</text>
+  <rect x="200" y="1290" width="460" height="60" rx="10" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.5"/>
+  <text class="nt" x="430" y="1309" text-anchor="middle">remediate</text>
+  <text class="ns" x="430" y="1327" text-anchor="middle" fill="#475569">RemediationPlannerAgent · fixes + patches</text>
+  <text class="ns" x="430" y="1343" text-anchor="middle" fill="#155E75">→ remediation_results</text>
+  <rect x="200" y="1382" width="460" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+  <text class="nt" x="430" y="1401" text-anchor="middle">report · DETERMINISTIC, NO LLM</text>
+  <text class="ns" x="430" y="1419" text-anchor="middle" fill="#B45309">transcribes every stage · RESOLVED, or ESCALATED</text>
+  <text class="ns" x="430" y="1435" text-anchor="middle" fill="#475569">if flagged or any review overridden</text>
+  <text class="ns" x="430" y="1451" text-anchor="middle" fill="#155E75">→ report · final_report · incident_status</text>
+  <rect x="375" y="1490" width="110" height="34" rx="17" fill="#ECFDF5" stroke="#16A34A" stroke-width="1.8"/>
+  <text class="pill" x="430" y="1511.0" text-anchor="middle" fill="#166534">END</text>
+  <rect x="800" y="800" width="350" height="124" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.8"/>
+  <text class="nt" x="975.0" y="822" text-anchor="middle" fill="#92400E">analyst_review · HITL</text>
+  <text class="ns" x="975.0" y="842" text-anchor="middle" fill="#92400E">interrupt() · pause on the checkpointer</text>
+  <text class="ns" x="975.0" y="859" text-anchor="middle" fill="#92400E">records the review · clears requires_review</text>
+  <text class="ns" x="975.0" y="876" text-anchor="middle" fill="#92400E">one interrupt for BOTH gates</text>
+  <text class="ns" x="975.0" y="893" text-anchor="middle" fill="#92400E">resumes IN PLACE via escalation_stage</text>
+  <path class="flow" d="M430 88 V100" marker-end="url(#arrow)"/>
+  <text class="el" x="442" y="99.0">analyze_threat(threat)</text>
+  <path class="flow" d="M430 170 V192" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 256 V284" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 354 V378" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 554 V582" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 658 V686" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 750 V778" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 842 V870" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 946 V974" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 1044 V1070" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 1258 V1286" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 1350 V1378" marker-end="url(#arrow)"/>
+  <path class="flow" d="M430 466 V490" marker-end="url(#arrow)"/>
+  <text class="el" x="442" y="483.0">proceed</text>
+  <path class="flow" d="M430 1170 V1194" marker-end="url(#arrow)"/>
+  <text class="el" x="442" y="1187.0">proceed</text>
+  <path class="flow" d="M430 1462 V1486" marker-end="url(#arrow)"/>
+  <path class="esc" d="M660 424.0 H690 V846 H796" marker-end="url(#arrowEsc)"/>
+  <text class="eesc" x="698" y="416.0">critical, or high + low-confidence</text>
+  <path class="esc" d="M660 1122.0 H690 V882 H796" marker-end="url(#arrowEsc)"/>
+  <text class="eesc" x="698" y="1114.0">high risk, or over-manual</text>
+  <path class="res" d="M970 800 V524.0 H664" marker-end="url(#arrowRes)"/>
+  <text class="eres" x="978" y="518.0">resume: detection → scan_vulns</text>
+  <path class="res" d="M940 924 V1228.0 H664" marker-end="url(#arrowRes)"/>
+  <text class="eres" x="948" y="1222.0">resume: response → comply</text>
+  <path class="flag" d="M660 137.0 H1195 V1422.0 H664" marker-end="url(#arrowFlag)"/>
+  <text class="eflag" x="1189" y="129.0" text-anchor="end">unusable report → ESCALATED, no agent runs</text>
+  <g><rect x="880" y="1470" width="190" height="46" fill="#F1F5F9" stroke="none"/><line x1="880" y1="1470" x2="880" y2="1516" stroke="#475569" stroke-width="1.3"/><line x1="1070" y1="1470" x2="1070" y2="1516" stroke="#475569" stroke-width="1.3"/><ellipse cx="975" cy="1516" rx="95" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/><ellipse cx="975" cy="1470" rx="95" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/><text class="nt" x="975" y="1494" text-anchor="middle" fill="#334155">SqliteSaver</text><text class="ns" x="975" y="1509" text-anchor="middle" fill="#334155">checkpoints.db (1 file)</text></g>
+  <g><rect x="95" y="1470" width="190" height="46" fill="#F1F5F9" stroke="none"/><line x1="95" y1="1470" x2="95" y2="1516" stroke="#475569" stroke-width="1.3"/><line x1="285" y1="1470" x2="285" y2="1516" stroke="#475569" stroke-width="1.3"/><ellipse cx="190" cy="1516" rx="95" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/><ellipse cx="190" cy="1470" rx="95" ry="11" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/><text class="nt" x="190" y="1494" text-anchor="middle" fill="#334155">Incident store</text><text class="ns" x="190" y="1509" text-anchor="middle" fill="#334155">incidents.db</text></g>
+  <path class="mem" d="M975.0 924 V1300 H975 V1462" marker-end="url(#arrowMem)"/>
+  <text class="cal" x="983.0" y="1290">durable checkpoint</text>
+  <path class="mem" d="M200 1422.0 H190 V1462" marker-end="url(#arrowMem)"/>
+  <text class="cal" x="184" y="1414.0" text-anchor="end">save_incident</text>
+  <g transform="translate(40,1600)">
+    <rect x="0" y="0" width="18" height="12" rx="3" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.4"/>
+    <text class="lg" x="26" y="10">LLM agent node</text>
+    <rect x="150" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+    <text class="lg" x="176" y="10">deterministic node</text>
+    <rect x="322" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#0E7490" stroke-width="2"/>
+    <text class="lg" x="348" y="10">deterministic gate</text>
+    <rect x="500" y="0" width="18" height="12" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+    <text class="lg" x="526" y="10">analyst review (HITL)</text>
+    <line x1="690" y1="6" x2="726" y2="6" stroke="#B45309" stroke-width="1.8"/>
+    <text class="lg" x="734" y="10">escalate to human</text>
+    <line x1="880" y1="6" x2="916" y2="6" stroke="#0E7490" stroke-width="2.4"/>
+    <text class="lg" x="924" y="10">resume in place</text>
+    <line x1="1040" y1="6" x2="1076" y2="6" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <text class="lg" x="1084" y="10">flagged bypass</text>
+  </g>
+</svg>
