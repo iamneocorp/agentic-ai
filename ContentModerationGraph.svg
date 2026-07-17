@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1330" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#94A3B8"/></marker>
+    <marker id="arrowT" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#0D9488"/></marker>
+    <marker id="arrowH" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#D97706"/></marker>
+    <marker id="arrowR" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#EF4444"/></marker>
+    <marker id="arrowMem" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#0D9488"/></marker>
+  </defs>
+  <style>
+    text { fill:#0F172A; }
+    .title { font-size:21px; font-weight:700; letter-spacing:-0.3px; }
+    .subtitle { font-size:12px; fill:#64748B; }
+    .nt { font-size:12.5px; font-weight:700; }
+    .ns { font-size:10.5px; }
+    .el { font-size:10px; fill:#0D9488; font-weight:600; }
+    .eh { font-size:10px; fill:#B45309; font-weight:600; }
+    .er { font-size:10px; fill:#B91C1C; font-weight:600; }
+    .pill { font-size:12.5px; font-weight:700; }
+    .lg { font-size:11px; fill:#334155; }
+    .cal { font-size:9.5px; fill:#0F766E; }
+    .flow { stroke:#94A3B8; stroke-width:1.6; fill:none; }
+    .gate { stroke:#2DD4BF; stroke-width:1.8; fill:none; }
+    .hit  { stroke:#F59E0B; stroke-width:1.8; fill:none; }
+    .res  { stroke:#EF4444; stroke-width:1.7; fill:none; }
+    .mem  { stroke:#2DD4BF; stroke-width:1.4; fill:none; stroke-dasharray:5 4; }
+  </style>
+<rect x="0" y="0" width="1240" height="1330" fill="#FFFFFF"/>
+<text class="title" x="40" y="40">Media Content Moderation — CrewAI Flow</text>
+<text class="subtitle" x="41" y="62">Flow · @start → four @router gates (ingestion · safety · compliance · decision) → or_() → finalize · 4 pure-LLM agents · 7 tools · SQLite audit trail</text>
+<rect x="485" y="54" width="110" height="34" rx="17" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.6"/>
+<text class="pill" x="540" y="76" text-anchor="middle" fill="#0D9488">START</text>
+<rect x="290" y="104" width="500" height="80" rx="10" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.5"/>
+<text class="nt" x="540" y="123" text-anchor="middle" fill="#0D9488">initiate_content_ingestion</text>
+<text class="ns" x="540" y="140" text-anchor="middle" fill="#475569">@start · ContentIngestionAgent · tool: Content Fetcher Tool</text>
+<text class="ns" x="540" y="155" text-anchor="middle" fill="#475569">fetch the item from the content store; read its metadata</text>
+<text class="ns" x="540" y="170" text-anchor="middle" fill="#0D9488">→ metadata · content_type · fetched</text>
+<rect x="320" y="210" width="440" height="62" rx="10" fill="#FFFFFF" stroke="#2DD4BF" stroke-width="2"/>
+<text class="nt" x="540" y="229" text-anchor="middle" fill="#0D9488">route_by_ingestion</text>
+<text class="ns" x="540" y="246" text-anchor="middle" fill="#475569">@router — GATE 1</text>
+<text class="ns" x="540" y="261" text-anchor="middle" fill="#475569">content fetched?</text>
+<rect x="900" y="204" width="275" height="80" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.8"/>
+<text class="nt" x="1037.5" y="223" text-anchor="middle" fill="#92400E">mark_ingestion_failed</text>
+<text class="ns" x="1037.5" y="240" text-anchor="middle" fill="#B45309">@listen(failed) · HITL</text>
+<text class="ns" x="1037.5" y="255" text-anchor="middle" fill="#B45309">could not fetch — queue for a human</text>
+<text class="ns" x="1037.5" y="270" text-anchor="middle" fill="#0D9488">→ INGESTION_FAILED · hitl = True</text>
+<rect x="290" y="316" width="500" height="96" rx="10" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.5"/>
+<text class="nt" x="540" y="335" text-anchor="middle" fill="#0D9488">analyze_content</text>
+<text class="ns" x="540" y="352" text-anchor="middle" fill="#475569">@listen(fetched) · ContentAnalysisAgent</text>
+<text class="ns" x="540" y="367" text-anchor="middle" fill="#475569">tools: Image Analyzer Tool · Video Analyzer Tool</text>
+<text class="ns" x="540" y="382" text-anchor="middle" fill="#475569">Text Analyzer Tool · Audio Analyzer Tool</text>
+<text class="ns" x="540" y="397" text-anchor="middle" fill="#0D9488">→ analysis · safety_score (0.0–1.0)</text>
+<rect x="320" y="446" width="440" height="62" rx="10" fill="#FFFFFF" stroke="#2DD4BF" stroke-width="2"/>
+<text class="nt" x="540" y="465" text-anchor="middle" fill="#0D9488">route_by_safety</text>
+<text class="ns" x="540" y="482" text-anchor="middle" fill="#475569">@router — GATE 2</text>
+<text class="ns" x="540" y="497" text-anchor="middle" fill="#475569">safety_score ≥ safety_floor (0.5) ?</text>
+<rect x="900" y="441" width="275" height="72" rx="10" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.8"/>
+<text class="nt" x="1037.5" y="460" text-anchor="middle" fill="#B91C1C">auto_reject_unsafe</text>
+<text class="ns" x="1037.5" y="477" text-anchor="middle" fill="#475569">@listen(unsafe)</text>
+<text class="ns" x="1037.5" y="492" text-anchor="middle" fill="#475569">below the safety floor</text>
+<text class="ns" x="1037.5" y="507" text-anchor="middle" fill="#0D9488">→ REJECTED (skips the rest)</text>
+<rect x="290" y="552" width="500" height="80" rx="10" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.5"/>
+<text class="nt" x="540" y="571" text-anchor="middle" fill="#0D9488">check_compliance</text>
+<text class="ns" x="540" y="588" text-anchor="middle" fill="#475569">@listen(safe) · PolicyComplianceAgent · tool: Policy Checker Tool</text>
+<text class="ns" x="540" y="603" text-anchor="middle" fill="#475569">verify against platform + legal policy</text>
+<text class="ns" x="540" y="618" text-anchor="middle" fill="#0D9488">→ compliance · compliance_score (0.0–1.0)</text>
+<rect x="320" y="666" width="440" height="62" rx="10" fill="#FFFFFF" stroke="#2DD4BF" stroke-width="2"/>
+<text class="nt" x="540" y="685" text-anchor="middle" fill="#0D9488">route_by_compliance</text>
+<text class="ns" x="540" y="702" text-anchor="middle" fill="#475569">@router — GATE 3</text>
+<text class="ns" x="540" y="717" text-anchor="middle" fill="#475569">compliance_score ≥ compliance_floor (0.5) ?</text>
+<rect x="900" y="661" width="275" height="72" rx="10" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.8"/>
+<text class="nt" x="1037.5" y="680" text-anchor="middle" fill="#B91C1C">auto_reject_noncompliant</text>
+<text class="ns" x="1037.5" y="697" text-anchor="middle" fill="#475569">@listen(noncompliant)</text>
+<text class="ns" x="1037.5" y="712" text-anchor="middle" fill="#475569">below the compliance floor</text>
+<text class="ns" x="1037.5" y="727" text-anchor="middle" fill="#0D9488">→ REJECTED (skips decision)</text>
+<rect x="290" y="772" width="500" height="80" rx="10" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.5"/>
+<text class="nt" x="540" y="791" text-anchor="middle" fill="#0D9488">make_decision</text>
+<text class="ns" x="540" y="808" text-anchor="middle" fill="#475569">@listen(compliant) · ModerationDecisionAgent</text>
+<text class="ns" x="540" y="823" text-anchor="middle" fill="#475569">tool: Moderation Report Generator Tool</text>
+<text class="ns" x="540" y="838" text-anchor="middle" fill="#0D9488">→ final_decision · confidence · final_report</text>
+<rect x="320" y="886" width="440" height="62" rx="10" fill="#FFFFFF" stroke="#2DD4BF" stroke-width="2"/>
+<text class="nt" x="540" y="905" text-anchor="middle" fill="#0D9488">route_by_decision</text>
+<text class="ns" x="540" y="922" text-anchor="middle" fill="#475569">@router — GATE 4 · the agent’s own call</text>
+<text class="ns" x="540" y="937" text-anchor="middle" fill="#475569">approve / reject / review (or requires_human_review)</text>
+<rect x="100" y="1002" width="270" height="72" rx="10" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.7"/>
+<text class="nt" x="235" y="1021" text-anchor="middle" fill="#166534">mark_approved</text>
+<text class="ns" x="235" y="1038" text-anchor="middle" fill="#475569">@listen(approve)</text>
+<text class="ns" x="235" y="1053" text-anchor="middle" fill="#475569">cleared for publication</text>
+<text class="ns" x="235" y="1068" text-anchor="middle" fill="#0D9488">→ APPROVED</text>
+<rect x="420" y="1002" width="270" height="72" rx="10" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.7"/>
+<text class="nt" x="555" y="1021" text-anchor="middle" fill="#B91C1C">mark_rejected</text>
+<text class="ns" x="555" y="1038" text-anchor="middle" fill="#475569">@listen(reject)</text>
+<text class="ns" x="555" y="1053" text-anchor="middle" fill="#475569">content is blocked</text>
+<text class="ns" x="555" y="1068" text-anchor="middle" fill="#0D9488">→ REJECTED</text>
+<rect x="740" y="1002" width="270" height="72" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.8"/>
+<text class="nt" x="875" y="1021" text-anchor="middle" fill="#92400E">flag_for_review</text>
+<text class="ns" x="875" y="1038" text-anchor="middle" fill="#B45309">@listen(review) · HITL</text>
+<text class="ns" x="875" y="1053" text-anchor="middle" fill="#B45309">queued for a human moderator</text>
+<text class="ns" x="875" y="1068" text-anchor="middle" fill="#0D9488">→ QUEUED_FOR_REVIEW · hitl = True</text>
+<rect x="290" y="1122" width="500" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+<text class="nt" x="540" y="1141" text-anchor="middle" fill="#334155">finalize_moderation</text>
+<text class="ns" x="540" y="1158" text-anchor="middle" fill="#475569">@listen(or_( all six branches ))</text>
+<text class="ns" x="540" y="1173" text-anchor="middle" fill="#475569">stamp timing · persist to the audit trail (record_moderation)</text>
+<text class="ns" x="540" y="1188" text-anchor="middle" fill="#0D9488">→ resolved_at · duration_seconds</text>
+<rect x="485" y="1226" width="110" height="34" rx="17" fill="#DCFCE7" stroke="#4ADE80" stroke-width="1.8"/>
+<text class="pill" x="540" y="1248" text-anchor="middle" fill="#166534">END</text>
+<g><rect x="900" y="1140" width="180" height="44" fill="#F1F5F9" stroke="none"/><line x1="900" y1="1140" x2="900" y2="1184" stroke="#475569" stroke-width="1.3"/><line x1="1080" y1="1140" x2="1080" y2="1184" stroke="#475569" stroke-width="1.3"/><ellipse cx="990" cy="1184" rx="90" ry="10" fill="#F1F5F9" stroke="#475569" stroke-width="1.3"/><ellipse cx="990" cy="1140" rx="90" ry="10" fill="#E2E8F0" stroke="#475569" stroke-width="1.3"/><text class="nt" x="990" y="1162" text-anchor="middle" fill="#334155">Audit trail</text><text class="ns" x="990" y="1177" text-anchor="middle" fill="#334155">moderations.db</text></g>
+<text class="cal" x="45" y="560">HITL review queue</text>
+<text class="cal" x="45" y="574">failed ingestion + borderline</text>
+<text class="cal" x="45" y="588">calls wait for a human</text>
+<text class="cal" x="45" y="602">(approval_manager)</text>
+<path class="flow" d="M540 88 V102" marker-end="url(#arrow)"/>
+<text class="el" x="552" y="99">run_moderation(content)</text>
+<path class="flow" d="M540 184 V210" marker-end="url(#arrow)"/>
+<path class="gate" d="M540 272 V316" marker-end="url(#arrowT)"/>
+<text class="el" x="552" y="297">fetched</text>
+<path class="flow" d="M540 412 V446" marker-end="url(#arrow)"/>
+<path class="gate" d="M540 508 V552" marker-end="url(#arrowT)"/>
+<text class="el" x="552" y="533">safe (≥ floor)</text>
+<path class="flow" d="M540 632 V666" marker-end="url(#arrow)"/>
+<path class="gate" d="M540 728 V772" marker-end="url(#arrowT)"/>
+<text class="el" x="552" y="753">compliant (≥ floor)</text>
+<path class="flow" d="M540 852 V886" marker-end="url(#arrow)"/>
+<path class="hit" d="M760 241 H906" marker-end="url(#arrowH)"/>
+<text class="eh" x="792" y="234">failed</text>
+<path class="res" d="M760 477 H906" marker-end="url(#arrowR)"/>
+<text class="er" x="792" y="470">unsafe</text>
+<path class="res" d="M760 697 H906" marker-end="url(#arrowR)"/>
+<text class="er" x="792" y="690">noncompliant</text>
+<path class="gate" d="M540 948 V976 H235 V1002" marker-end="url(#arrowT)"/>
+<text class="el" x="300" y="969">approve</text>
+<path class="res" d="M540 948 V990 H555 V1002" marker-end="url(#arrowR)"/>
+<text class="er" x="562" y="984">reject</text>
+<path class="hit" d="M540 948 V976 H875 V1002" marker-end="url(#arrowH)"/>
+<text class="eh" x="762" y="969">review</text>
+<path class="flow" d="M235 1074 V1094"/>
+<path class="flow" d="M555 1074 V1094"/>
+<path class="flow" d="M875 1074 V1094"/>
+<path class="flow" d="M1175 241 H1205"/>
+<path class="flow" d="M1175 477 H1205"/>
+<path class="flow" d="M1175 697 H1205"/>
+<path class="flow" d="M1205 241 V1094"/>
+<path class="flow" d="M235 1094 H1205"/>
+<path class="flow" d="M540 1094 V1122" marker-end="url(#arrow)"/>
+<text class="el" x="250" y="1088">or_( … )</text>
+<path class="flow" d="M540 1202 V1226" marker-end="url(#arrow)"/>
+<path class="mem" d="M790 1162 H980" marker-end="url(#arrowMem)"/>
+<text class="cal" x="806" y="1154">record_moderation</text>
+<g transform="translate(40,1306)">
+<rect x="0" y="0" width="18" height="12" rx="3" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="1.6"/>
+<text class="lg" x="26" y="10">agent step (pure LLM)</text>
+<rect x="200" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+<text class="lg" x="226" y="10">plain @listen</text>
+<rect x="350" y="0" width="18" height="12" rx="3" fill="#FFFFFF" stroke="#2DD4BF" stroke-width="1.6"/>
+<text class="lg" x="376" y="10">@router gate</text>
+<rect x="480" y="0" width="18" height="12" rx="3" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.6"/>
+<text class="lg" x="506" y="10">HITL queue</text>
+<rect x="600" y="0" width="18" height="12" rx="3" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.6"/>
+<text class="lg" x="626" y="10">reject</text>
+<line x1="690" y1="6" x2="724" y2="6" stroke="#2DD4BF" stroke-width="1.8"/>
+<text class="lg" x="732" y="10">router branch</text>
+<line x1="850" y1="6" x2="884" y2="6" stroke="#2DD4BF" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text class="lg" x="892" y="10">persistence</text>
+</g>
+</svg>
